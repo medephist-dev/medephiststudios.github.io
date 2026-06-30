@@ -43,6 +43,46 @@
   nav a { color: var(--muted); font-size: 0.9rem; margin-left: 24px; }
   nav a:hover { color: var(--gold); }
 
+  /* DROPDOWN NAV */
+  .nav-dropdown { position: relative; display: inline-block; margin-left: 24px; }
+  .nav-dropdown-btn {
+    background: none;
+    border: 1px solid #3a3a4a;
+    color: var(--muted);
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .nav-dropdown-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 8px);
+    background: var(--dark3);
+    border: 1px solid #3a3a4a;
+    border-radius: 8px;
+    min-width: 180px;
+    z-index: 100;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  }
+  .nav-dropdown:hover .nav-dropdown-menu,
+  .nav-dropdown-btn:focus + .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    color: var(--text);
+    font-size: 0.9rem;
+    margin: 0;
+    border-bottom: 1px solid #2a2a38;
+    transition: background 0.15s, color 0.15s;
+  }
+  .nav-dropdown-menu a:last-child { border-bottom: none; }
+  .nav-dropdown-menu a:hover { background: var(--dark2); color: var(--gold); }
+
   /* HERO */
   .hero {
     text-align: center;
@@ -229,12 +269,48 @@
     margin: 10px auto 0;
   }
 
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--dark3);
+    border-top: 1px solid #2a2a38;
+    padding: 8px 0;
+  }
+  .mobile-menu a {
+    display: block;
+    padding: 12px 24px;
+    color: var(--text);
+    font-size: 1rem;
+    border-bottom: 1px solid #2a2a38;
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--gold); background: var(--dark2); }
+  .mobile-menu.open { display: flex; }
+
   @media (max-width: 600px) {
     header { padding: 14px 16px; }
     nav { display: none; }
+    .hamburger { display: flex; }
     .btn-secondary { margin-left: 0; margin-top: 10px; display: block; }
     .hero-buttons { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .btn-secondary { margin-left: 0; }
   }
 </style>
 </head>
@@ -245,10 +321,28 @@
   <nav>
     <a href="#features">Features</a>
     <a href="#privacy">Privacy</a>
-    <a href="privacy-policy.html">Privacy Policy</a>
-    <a href="#donate">Support</a>
+    <div class="nav-dropdown">
+      <button class="nav-dropdown-btn">More ▾</button>
+      <div class="nav-dropdown-menu">
+        <a href="#support">📧 Contact Support</a>
+        <a href="mailto:support@medephiststudios.com?subject=Bug%20Report%20—%20Tyrian%20Vault&body=What%20happened%3A%0A%0APhone%20model%3A%0AAndroid%20version%3A%0AApp%20version%3A">🐛 Report a Bug</a>
+        <a href="#donate">♥ Donate</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+      </div>
+    </div>
   </nav>
+  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+    <span></span><span></span><span></span>
+  </button>
 </header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
+  <a href="#privacy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Privacy</a>
+  <a href="#support" onclick="document.getElementById('mobileMenu').classList.remove('open')">📧 Contact Support</a>
+  <a href="mailto:support@medephiststudios.com?subject=Bug%20Report%20—%20Tyrian%20Vault&body=What%20happened%3A%0A%0APhone%20model%3A%0AAndroid%20version%3A%0AApp%20version%3A">🐛 Report a Bug</a>
+  <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')">♥ Donate</a>
+  <a href="privacy-policy.html">Privacy Policy</a>
+</div>
 
 <section class="hero">
   <div class="hero-badge">Free Android App</div>
