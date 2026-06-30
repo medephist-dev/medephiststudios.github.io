@@ -65,6 +65,12 @@ This repo is the marketing/support site only. The Tyrian Vault app itself (Expo/
 - Domain registered via Squarespace Domains; DNS: 4 A records → GitHub Pages IPs + `www` CNAME → `medephiststudios.github.io`. HTTPS enforced via GitHub Pages settings.
 - support@medephiststudios.com forwards to medephist@gmail.com via Squarespace email forwarding.
 
+## Open to-dos
+
+- **Add Google Play Store link** to the hero "Get it on Google Play" button (`index.html`, currently `href="#"`) once the app is published — it's still in beta.
+- **GitHub issue triage agent** — set up a scheduled cloud agent to check `medephist-dev/TyrianVault` Issues for new `[BUG]` entries and analyze them. Undecided: comment on issues directly vs. send a summary report vs. both; daily vs. hourly frequency; whether the repo is public or private.
+- **5 pending homepage cards** (Build Creator, Achievements, Masteries, Skins/Wardrobe, Wallet + Gem Exchange) — waiting on screenshots from the app before wiring into the `FEATURES` object and screenshot gallery in `index.html`.
+
 ## Deploying
 
 GitHub Pages deploys automatically (~60s) on push to `main`. There is no CI, test suite, or lint step in this repo.
