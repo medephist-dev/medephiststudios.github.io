@@ -435,6 +435,29 @@
     z-index: 1;
   }
   .lightbox-close:hover { background: rgba(200,168,75,0.2); color: var(--gold); }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(10,10,15,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.6rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    z-index: 1;
+  }
+  .lightbox-arrow:hover { background: rgba(200,168,75,0.2); color: var(--gold); border-color: rgba(200,168,75,0.4); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  @media (max-width: 600px) { .lightbox-arrow { display: none; } }
 
   .modal-carousel::after {
     content: '';
@@ -654,7 +677,9 @@
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous">‹</button>
   <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next">›</button>
 </div>
 
 <!-- FEATURE MODAL -->
@@ -695,6 +720,11 @@ function setCarouselSlide(index, animate) {
   } else {
     img.src = carouselImages[index];
   }
+  // Keep lightbox in sync
+  var lightbox = document.getElementById('lightbox');
+  if (lightbox.classList.contains('open')) {
+    document.getElementById('lightboxImg').src = carouselImages[index];
+  }
   dots.forEach(function(d, i) { d.classList.toggle('active', i === index); });
   carouselIndex = index;
 }
@@ -725,7 +755,7 @@ const FEATURES = {
       'Plan any craft instantly. Search any craftable item and see the full recipe tree broken down step by step. Tyrian Vault checks your inventory, bank, and every character bag automatically — no switching tabs, no manual counting.',
       'See exactly how many materials you have versus what you need, and know at a glance what\'s left to gather.'
     ],
-    images: []
+    images: ['screenshots/crafting-1.jpg', 'screenshots/crafting-2.jpg', 'screenshots/crafting-3.jpg', 'screenshots/crafting-4.jpg']
   },
   'legendary': {
     icon: '🏆',
@@ -857,19 +887,56 @@ document.addEventListener('keydown', function(e) {
 });
 
 // Lightbox
-document.getElementById('carouselImg').addEventListener('click', function() {
-  if (!this.src) return;
-  document.getElementById('lightboxImg').src = this.src;
-  document.getElementById('lightbox').classList.add('open');
-});
-document.getElementById('lightbox').addEventListener('click', function(e) {
-  if (e.target === this) this.classList.remove('open');
-});
-document.getElementById('lightboxClose').addEventListener('click', function() {
+var lbTouchStartX = 0, lbTouchStartY = 0;
+
+function openLightbox() {
+  if (!carouselImages.length) return;
+  document.getElementById('lightboxImg').src = carouselImages[carouselIndex];
+  var lb = document.getElementById('lightbox');
+  lb.classList.add('open');
+  var multi = carouselImages.length > 1;
+  document.getElementById('lightboxPrev').style.display = multi ? '' : 'none';
+  document.getElementById('lightboxNext').style.display = multi ? '' : 'none';
+}
+function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
+}
+
+document.getElementById('carouselImg').addEventListener('click', openLightbox);
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
 });
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxPrev').addEventListener('click', function(e) {
+  e.stopPropagation();
+  setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
+});
+document.getElementById('lightboxNext').addEventListener('click', function(e) {
+  e.stopPropagation();
+  setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
+});
+// Swipe in lightbox
+document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+  lbTouchStartX = e.changedTouches[0].clientX;
+  lbTouchStartY = e.changedTouches[0].clientY;
+}, { passive: true });
+document.getElementById('lightbox').addEventListener('touchend', function(e) {
+  if (!carouselImages.length) return;
+  var dx = lbTouchStartX - e.changedTouches[0].clientX;
+  var dy = lbTouchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
+  if (dx > 0) {
+    setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
+  } else {
+    setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
+  }
+}, { passive: true });
 document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') document.getElementById('lightbox').classList.remove('open');
+  var lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeLightbox(); return; }
+  if (e.key === 'ArrowRight') setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
+  if (e.key === 'ArrowLeft') setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
 });
 
 // Touch swipe support for carousel
