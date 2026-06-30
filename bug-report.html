@@ -74,6 +74,7 @@
     transition: background 0.2s;
   }
   .btn-submit:hover { background: var(--gold-light); }
+  .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
   .note {
     margin-top: 20px;
@@ -81,6 +82,49 @@
     color: var(--muted);
     text-align: center;
   }
+
+  .error-msg {
+    display: none;
+    margin-top: 14px;
+    padding: 12px 16px;
+    background: rgba(180,50,50,0.15);
+    border: 1px solid rgba(180,50,50,0.4);
+    border-radius: 8px;
+    color: #e07070;
+    font-size: 0.85rem;
+    text-align: center;
+  }
+
+  .success-msg {
+    display: none;
+    text-align: center;
+    padding: 48px 24px;
+  }
+  .success-icon {
+    width: 64px; height: 64px;
+    background: rgba(200,168,75,0.15);
+    border: 2px solid var(--gold);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin: 0 auto 24px;
+  }
+  .success-msg h2 { font-size: 1.5rem; color: #fff; margin-bottom: 10px; }
+  .success-msg p { color: var(--muted); font-size: 0.95rem; max-width: 360px; margin: 0 auto 28px; line-height: 1.6; }
+  .btn-home {
+    display: inline-block;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+  }
+  .btn-home:hover { background: var(--gold); color: #0e0e12; }
 </style>
 </head>
 <body>
@@ -151,34 +195,69 @@
       <input type="email" id="email" placeholder="you@example.com">
     </div>
 
-    <button type="submit" class="btn-submit">Send Bug Report</button>
-    <p class="note">This opens your email app with everything pre-filled. Just hit send!</p>
+    <button type="submit" class="btn-submit" id="submitBtn">Send Bug Report</button>
+    <div class="error-msg" id="errorMsg">Something went wrong — please try again or email us directly at <a href="mailto:support@medephiststudios.com">support@medephiststudios.com</a>.</div>
+    <p class="note" id="formNote">We'll receive your report directly — no email app needed.</p>
   </form>
+
+  <div class="success-msg" id="successMsg">
+    <div class="success-icon">✓</div>
+    <h2>Report sent!</h2>
+    <p>Thanks for taking the time to report this. We'll look into it and get back to you if we left you an email to reply to.</p>
+    <a href="index.html" class="btn-home">← Back to home</a>
+  </div>
 </div>
 
 <script>
 document.getElementById('bugForm').addEventListener('submit', function(e) {
   e.preventDefault();
-  const description = document.getElementById('description').value;
-  const featureRaw  = document.getElementById('feature').value;
-  const otherFeat   = document.getElementById('otherFeature').value;
-  const feature     = featureRaw === 'Other' ? ('Other — ' + (otherFeat || 'not specified')) : featureRaw;
-  const phone       = document.getElementById('phone').value;
-  const android     = document.getElementById('android').value;
-  const appversion  = document.getElementById('appversion').value;
-  const email       = document.getElementById('email').value;
 
-  const subject = encodeURIComponent('Bug Report — Tyrian Vault' + (featureRaw ? ' (' + featureRaw + ')' : ''));
-  const body = encodeURIComponent(
-    'What went wrong:\n' + description +
-    '\n\nFeature: ' + (feature || 'Not specified') +
-    '\nPhone model: ' + (phone || 'Not specified') +
-    '\nAndroid version: ' + (android || 'Not specified') +
-    '\nApp version: ' + (appversion || 'Not specified') +
-    '\nReply to: ' + (email || 'Not provided')
-  );
+  var description = document.getElementById('description').value;
+  var featureRaw  = document.getElementById('feature').value;
+  var otherFeat   = document.getElementById('otherFeature').value;
+  var feature     = featureRaw === 'Other' ? ('Other — ' + (otherFeat || 'not specified')) : featureRaw;
+  var phone       = document.getElementById('phone').value;
+  var android     = document.getElementById('android').value;
+  var appversion  = document.getElementById('appversion').value;
+  var email       = document.getElementById('email').value;
 
-  window.location.href = 'mailto:support@medephiststudios.com?subject=' + subject + '&body=' + body;
+  var btn = document.getElementById('submitBtn');
+  var errorEl = document.getElementById('errorMsg');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  errorEl.style.display = 'none';
+
+  var payload = {
+    access_key: '666e9eb7-efb9-40ea-86a8-3ed38f39c34a',
+    subject: 'Bug Report — Tyrian Vault' + (featureRaw ? ' (' + featureRaw + ')' : ''),
+    from_name: 'Tyrian Vault Bug Report',
+    'Feature': feature || 'Not specified',
+    'What went wrong': description,
+    'Phone model': phone || 'Not specified',
+    'Android version': android || 'Not specified',
+    'App version': appversion || 'Not specified',
+    'Reply to': email || 'Not provided'
+  };
+
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(function(res) { return res.json(); })
+  .then(function(data) {
+    if (data.success) {
+      document.getElementById('bugForm').style.display = 'none';
+      document.getElementById('successMsg').style.display = 'block';
+    } else {
+      throw new Error(data.message || 'Submission failed');
+    }
+  })
+  .catch(function() {
+    btn.disabled = false;
+    btn.textContent = 'Send Bug Report';
+    errorEl.style.display = 'block';
+  });
 });
 </script>
 
