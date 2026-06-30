@@ -44,6 +44,7 @@
 
   .form-group { margin-bottom: 20px; }
   label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.5px; text-transform: uppercase; }
+  .req { color: #e07070; margin-left: 3px; }
   input, select, textarea {
     width: 100%;
     background: var(--dark2);
@@ -141,8 +142,8 @@
 
   <form id="bugForm">
     <div class="form-group">
-      <label>Which feature?</label>
-      <select id="feature" onchange="document.getElementById('otherBox').style.display = this.value === 'Other' ? 'block' : 'none'">
+      <label>Which feature?<span class="req">*</span></label>
+      <select id="feature" required onchange="document.getElementById('otherBox').style.display = this.value === 'Other' ? 'block' : 'none'">
         <option value="">— Select a feature —</option>
         <option>Boss Timers</option>
         <option>Crafting Assistant</option>
@@ -171,7 +172,7 @@
     </div>
 
     <div class="form-group">
-      <label>What went wrong?</label>
+      <label>What went wrong?<span class="req">*</span></label>
       <textarea id="description" placeholder="Describe what happened, what you expected to happen, and any steps to reproduce it..." required></textarea>
     </div>
 
@@ -186,8 +187,8 @@
     </div>
 
     <div class="form-group">
-      <label>App version <span style="color:var(--muted);text-transform:none;font-weight:400">(Settings → About)</span></label>
-      <input type="text" id="appversion" placeholder="e.g. v0.11.0">
+      <label>App version<span class="req">*</span> <span style="color:var(--muted);text-transform:none;font-weight:400">(Settings → About)</span></label>
+      <input type="text" id="appversion" placeholder="e.g. v0.11.0" required>
     </div>
 
     <div class="form-group">
@@ -229,7 +230,7 @@ document.getElementById('bugForm').addEventListener('submit', function(e) {
 
   var payload = {
     access_key: '666e9eb7-efb9-40ea-86a8-3ed38f39c34a',
-    subject: 'Bug Report — Tyrian Vault' + (featureRaw ? ' (' + featureRaw + ')' : ''),
+    subject: '[BUG] Tyrian Vault' + (featureRaw ? ' — ' + featureRaw : ''),
     from_name: 'Tyrian Vault Bug Report',
     'Feature': feature || 'Not specified',
     'What went wrong': description,
