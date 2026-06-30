@@ -330,73 +330,158 @@
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.78);
+    background: rgba(0,0,0,0.88);
     z-index: 1000;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: 20px;
   }
   .modal-overlay.open { display: flex; }
 
   .modal {
     background: var(--dark2);
-    border: 1px solid var(--gold);
-    border-radius: 16px;
-    max-width: 580px;
+    border: 1px solid rgba(200,168,75,0.12);
+    border-radius: 28px;
+    max-width: 460px;
     width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
-    padding: 32px;
+    max-height: 92vh;
+    overflow: hidden;
     position: relative;
-    animation: modalIn 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    animation: modalIn 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 0 1px rgba(200,168,75,0.06), 0 48px 120px rgba(0,0,0,0.95);
   }
   @keyframes modalIn {
-    from { opacity: 0; transform: translateY(14px) scale(0.97); }
-    to   { opacity: 1; transform: translateY(0)   scale(1);    }
+    from { opacity: 0; transform: translateY(36px) scale(0.91); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
   }
 
   .modal-close {
     position: absolute;
-    top: 16px; right: 16px;
-    background: none;
-    border: 1px solid #3a3a4a;
-    color: var(--muted);
-    width: 32px; height: 32px;
-    border-radius: 8px;
+    top: 14px; right: 14px;
+    z-index: 20;
+    background: rgba(10,10,15,0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    width: 28px; height: 28px;
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 0.78rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 0.2s, color 0.2s;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
   }
-  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+  .modal-close:hover { background: rgba(200,168,75,0.18); color: var(--gold); border-color: rgba(200,168,75,0.35); }
 
-  .modal-icon { font-size: 2.2rem; margin-bottom: 12px; }
-  .modal-title { font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 16px; padding-right: 40px; }
-  .modal-body p { color: var(--text); font-size: 0.95rem; line-height: 1.65; margin-bottom: 12px; }
+  /* CAROUSEL */
+  .modal-carousel {
+    position: relative;
+    background: #07070d;
+    flex-shrink: 0;
+    border-radius: 28px 28px 0 0;
+    overflow: hidden;
+    user-select: none;
+  }
+  .modal-carousel-img {
+    width: 100%;
+    height: 360px;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.22s ease;
+    pointer-events: none;
+  }
+  .modal-carousel-img.fading { opacity: 0; }
+
+  .modal-carousel::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--dark2));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 44%;
+    transform: translateY(-50%);
+    background: rgba(10,10,15,0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.75);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    z-index: 2;
+  }
+  .carousel-arrow:hover { background: rgba(200,168,75,0.18); border-color: rgba(200,168,75,0.4); color: var(--gold); }
+  .carousel-prev { left: 14px; }
+  .carousel-next { right: 14px; }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .carousel-dot {
+    height: 6px;
+    width: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: width 0.3s ease, background 0.3s ease, border-radius 0.3s ease;
+  }
+  .carousel-dot.active { width: 20px; background: var(--gold); border-radius: 3px; }
+
+  /* MODAL CONTENT */
+  .modal-content {
+    padding: 20px 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .modal-icon { font-size: 1.9rem; line-height: 1; flex-shrink: 0; }
+  .modal-title { font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.3; margin: 0; }
+  .modal-body p {
+    color: #9e9990;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
   .modal-body p:last-child { margin-bottom: 0; }
 
-  .modal-gallery {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 4px;
-    margin-top: 24px;
-    scroll-snap-type: x mandatory;
-  }
-  .modal-gallery img {
-    height: 400px;
-    width: auto;
-    border-radius: 10px;
-    border: 1px solid #2a2a38;
-    flex-shrink: 0;
-    scroll-snap-align: start;
-  }
-
   @media (max-width: 600px) {
-    .modal { padding: 24px 18px; }
-    .modal-gallery img { height: 300px; }
+    .modal-overlay { padding: 0; align-items: flex-end; }
+    .modal { border-radius: 24px 24px 0 0; max-width: 100%; max-height: 90vh; }
+    .modal-carousel { border-radius: 24px 24px 0 0; }
+    .modal-carousel-img { height: 280px; }
+    .modal-content { padding: 16px 20px 32px; }
+    .carousel-arrow { display: none; }
   }
 </style>
 </head>
@@ -529,15 +614,45 @@
 <!-- FEATURE MODAL -->
 <div class="modal-overlay" id="featureModal" role="dialog" aria-modal="true">
   <div class="modal">
-    <button class="modal-close" onclick="closeFeatureModal()" aria-label="Close">✕</button>
-    <div class="modal-icon" id="modalIcon"></div>
-    <h2 class="modal-title" id="modalTitle"></h2>
-    <div class="modal-body" id="modalBody"></div>
-    <div class="modal-gallery" id="modalGallery"></div>
+    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+
+    <div class="modal-carousel" id="modalCarousel" style="display:none">
+      <img class="modal-carousel-img" id="carouselImg" src="" alt="">
+      <button class="carousel-arrow carousel-prev" id="carouselPrev" aria-label="Previous image">‹</button>
+      <button class="carousel-arrow carousel-next" id="carouselNext" aria-label="Next image">›</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
   </div>
 </div>
 
 <script>
+var carouselImages = [];
+var carouselIndex = 0;
+
+function setCarouselSlide(index, animate) {
+  var img = document.getElementById('carouselImg');
+  var dots = document.querySelectorAll('.carousel-dot');
+  if (animate) {
+    img.classList.add('fading');
+    setTimeout(function() {
+      img.src = carouselImages[index];
+      img.classList.remove('fading');
+    }, 200);
+  } else {
+    img.src = carouselImages[index];
+  }
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === index); });
+  carouselIndex = index;
+}
+
 const FEATURES = {
   'notifications': {
     icon: '🔔',
@@ -623,30 +738,46 @@ const FEATURES = {
 };
 
 function openFeatureModal(key) {
-  const f = FEATURES[key];
+  var f = FEATURES[key];
   if (!f) return;
+
   document.getElementById('modalIcon').textContent = f.icon;
   document.getElementById('modalTitle').textContent = f.title;
-  const bodyEl = document.getElementById('modalBody');
+
+  var bodyEl = document.getElementById('modalBody');
   bodyEl.innerHTML = '';
   f.body.forEach(function(text) {
-    const p = document.createElement('p');
+    var p = document.createElement('p');
     p.textContent = text;
     bodyEl.appendChild(p);
   });
-  const gallery = document.getElementById('modalGallery');
-  gallery.innerHTML = '';
-  if (f.images && f.images.length) {
-    f.images.forEach(function(src) {
-      const img = document.createElement('img');
-      img.src = src;
-      img.alt = f.title + ' screenshot';
-      gallery.appendChild(img);
+
+  carouselImages = f.images || [];
+  var carousel = document.getElementById('modalCarousel');
+  var dotsEl   = document.getElementById('carouselDots');
+  var prev     = document.getElementById('carouselPrev');
+  var next     = document.getElementById('carouselNext');
+
+  if (carouselImages.length) {
+    carousel.style.display = '';
+    dotsEl.innerHTML = '';
+    carouselImages.forEach(function(_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Image ' + (i + 1));
+      dot.addEventListener('click', function() { setCarouselSlide(i, true); });
+      dotsEl.appendChild(dot);
     });
-    gallery.style.display = 'flex';
+    var multi = carouselImages.length > 1;
+    prev.style.display = multi ? '' : 'none';
+    next.style.display = multi ? '' : 'none';
+    dotsEl.style.display = multi ? '' : 'none';
+    document.getElementById('carouselImg').src = carouselImages[0];
+    carouselIndex = 0;
   } else {
-    gallery.style.display = 'none';
+    carousel.style.display = 'none';
   }
+
   document.getElementById('featureModal').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
@@ -655,6 +786,14 @@ function closeFeatureModal() {
   document.getElementById('featureModal').classList.remove('open');
   document.body.style.overflow = '';
 }
+
+document.getElementById('carouselPrev').addEventListener('click', function() {
+  setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, true);
+});
+document.getElementById('carouselNext').addEventListener('click', function() {
+  setCarouselSlide((carouselIndex + 1) % carouselImages.length, true);
+});
+document.getElementById('modalClose').addEventListener('click', closeFeatureModal);
 
 document.querySelectorAll('.card[data-feature]').forEach(function(card) {
   card.addEventListener('click', function() { openFeatureModal(card.dataset.feature); });
@@ -670,6 +809,25 @@ document.getElementById('featureModal').addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeFeatureModal();
 });
+
+// Touch swipe support for carousel
+var swipeStartX = 0;
+var swipeStartY = 0;
+document.getElementById('modalCarousel').addEventListener('touchstart', function(e) {
+  swipeStartX = e.changedTouches[0].clientX;
+  swipeStartY = e.changedTouches[0].clientY;
+}, { passive: true });
+document.getElementById('modalCarousel').addEventListener('touchend', function(e) {
+  if (!carouselImages.length) return;
+  var dx = swipeStartX - e.changedTouches[0].clientX;
+  var dy = swipeStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
+  if (dx > 0) {
+    setCarouselSlide((carouselIndex + 1) % carouselImages.length, true);
+  } else {
+    setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, true);
+  }
+}, { passive: true });
 </script>
 
 </body>
