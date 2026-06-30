@@ -312,6 +312,92 @@
     .btn-secondary { margin-left: 0; margin-top: 10px; display: block; }
     .hero-buttons { display: flex; flex-direction: column; align-items: center; gap: 10px; }
   }
+
+  /* FEATURE MODALS */
+  .card[data-feature] { cursor: pointer; }
+  .card[data-feature]::after {
+    content: 'Learn more →';
+    display: block;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    color: var(--gold);
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+  .card[data-feature]:hover::after { opacity: 1; }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.78);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--dark2);
+    border: 1px solid var(--gold);
+    border-radius: 16px;
+    max-width: 580px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 32px;
+    position: relative;
+    animation: modalIn 0.2s ease;
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(14px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0)   scale(1);    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: none;
+    border: 1px solid #3a3a4a;
+    color: var(--muted);
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
+  .modal-icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .modal-title { font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 16px; padding-right: 40px; }
+  .modal-body p { color: var(--text); font-size: 0.95rem; line-height: 1.65; margin-bottom: 12px; }
+  .modal-body p:last-child { margin-bottom: 0; }
+
+  .modal-gallery {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-top: 24px;
+    scroll-snap-type: x mandatory;
+  }
+  .modal-gallery img {
+    height: 400px;
+    width: auto;
+    border-radius: 10px;
+    border: 1px solid #2a2a38;
+    flex-shrink: 0;
+    scroll-snap-align: start;
+  }
+
+  @media (max-width: 600px) {
+    .modal { padding: 24px 18px; }
+    .modal-gallery img { height: 300px; }
+  }
 </style>
 </head>
 <body>
@@ -362,47 +448,47 @@
   <p class="section-label">What's Inside</p>
   <h2 class="section-title">Everything you need in Tyria</h2>
   <div class="grid">
-    <div class="card" style="border-color: var(--gold);">
+    <div class="card" data-feature="notifications" style="border-color: var(--gold);" tabindex="0">
       <div class="card-icon">🔔</div>
       <h3>Real Notifications & Alarms</h3>
       <p>The feature no other GW2 app has. Set an alarm for any world boss or event and get a push notification with sound — even when the app is closed and your screen is off. Put your phone down. We'll tell you when it's time.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="boss-timers" tabindex="0">
       <div class="card-icon">⏱️</div>
       <h3>World Boss Timers</h3>
       <p>Live countdowns for every world boss across all maps. Never miss Tequatl, Triple Trouble, or the Shatterer again.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="crafting" tabindex="0">
       <div class="card-icon">⚒️</div>
       <h3>Crafting Assistant</h3>
       <p>See exactly what materials you're missing. Checks your inventory, bank, and all character bags automatically — no manual counting.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="legendary" tabindex="0">
       <div class="card-icon">🏆</div>
       <h3>Legendary Crafting Tracker</h3>
       <p>Track your legendary progress, see what you still need, and compare make-vs-buy costs with live Trading Post prices.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="account" tabindex="0">
       <div class="card-icon">👤</div>
       <h3>Account & Characters</h3>
       <p>View your characters, equipment, wallet, currencies, and inventory at a glance. Supports multiple GW2 accounts.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="maps" tabindex="0">
       <div class="card-icon">🗺️</div>
       <h3>Interactive Maps</h3>
       <p>Points of interest, waypoints, boss spawn locations, and mastery insights — for every zone in Tyria.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="wvw" tabindex="0">
       <div class="card-icon">⚔️</div>
       <h3>WvW, PvP & Guilds</h3>
       <p>Live WvW objective maps with team ownership and tier badges. PvP stats and leaderboards. Guild roster, storage, and missions.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="daily" tabindex="0">
       <div class="card-icon">📅</div>
       <h3>Daily Reset & Wizard's Vault</h3>
       <p>Track your daily and weekly objectives, Wizard's Vault progress, and reset timers — all in one place.</p>
     </div>
-    <div class="card">
+    <div class="card" data-feature="trading" tabindex="0">
       <div class="card-icon">💰</div>
       <h3>Trading Post</h3>
       <p>Check live item prices, track your listings, and find the best deals without launching the game.</p>
@@ -427,7 +513,7 @@
 <section class="donate" id="donate">
   <h2>Support the Project</h2>
   <p>Tyrian Vault is free and always will be. If it's saved you time or made your adventures easier, a small donation helps keep development going.</p>
-  <a href="#" class="btn-donate">♥ Buy me a coffee</a>
+  <a href="https://ko-fi.com/medephiststudios" target="_blank" rel="noopener" class="btn-donate">♥ Buy me a coffee</a>
 </section>
 
 <footer>
@@ -438,6 +524,153 @@
   </div>
   <p class="disclaimer">Tyrian Vault is an unofficial companion app and is not affiliated with ArenaNet or NCSoft. Guild Wars 2 is a trademark of ArenaNet, LLC. © 2026 Medephist Studios.</p>
 </footer>
+
+
+<!-- FEATURE MODAL -->
+<div class="modal-overlay" id="featureModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="modal-close" onclick="closeFeatureModal()" aria-label="Close">✕</button>
+    <div class="modal-icon" id="modalIcon"></div>
+    <h2 class="modal-title" id="modalTitle"></h2>
+    <div class="modal-body" id="modalBody"></div>
+    <div class="modal-gallery" id="modalGallery"></div>
+  </div>
+</div>
+
+<script>
+const FEATURES = {
+  'notifications': {
+    icon: '🔔',
+    title: 'Real Notifications & Alarms',
+    body: [
+      'Real OS-level push notifications with sound — not just in-app alerts. Set an alarm for any world boss and Tyrian Vault will notify you even when the app is closed and your screen is off.',
+      'Unlike simple countdowns, these are true system alarms that can wake your device and play a sound. Set it before a long farm session and put your phone down — we\'ll tell you when it\'s time.'
+    ],
+    images: []
+  },
+  'boss-timers': {
+    icon: '⏱️',
+    title: 'World Boss Timers',
+    body: [
+      'Live countdowns for every world boss across all Tyrian maps, auto-synced to the official schedule. See at a glance what\'s coming up next, what\'s active right now, and how long until each boss spawns.',
+      'Never miss Tequatl, Triple Trouble, the Shatterer, or any of the other world bosses again.'
+    ],
+    images: []
+  },
+  'crafting': {
+    icon: '⚒️',
+    title: 'Crafting Assistant',
+    body: [
+      'Plan any craft instantly. Search any craftable item and see the full recipe tree broken down step by step. Tyrian Vault checks your inventory, bank, and every character bag automatically — no switching tabs, no manual counting.',
+      'See exactly how many materials you have versus what you need, and know at a glance what\'s left to gather.'
+    ],
+    images: []
+  },
+  'legendary': {
+    icon: '🏆',
+    title: 'Legendary Crafting Tracker',
+    body: [
+      'The long game, simplified. Track your progress toward any legendary weapon, armor piece, or trinket. See which collections are complete, which are in progress, and exactly what\'s still needed.',
+      'Live Trading Post prices are shown for every component so you can make smart make-vs-buy decisions without ever leaving the app.'
+    ],
+    images: []
+  },
+  'account': {
+    icon: '👤',
+    title: 'Account & Characters',
+    body: [
+      'A complete snapshot of your GW2 account, always at hand. Browse all your characters, view their equipped gear and build, and check your wallet, currencies, and full inventory.',
+      'Supports multiple GW2 accounts — add them all and switch between them instantly.'
+    ],
+    images: []
+  },
+  'maps': {
+    icon: '🗺️',
+    title: 'Interactive Maps',
+    body: [
+      'Every zone in Tyria, fully detailed. Find points of interest, waypoints, hero points, vistas, and mastery insights. Boss spawn locations are clearly marked so you know exactly where to stand when the timer hits zero.',
+      'Whether you\'re map-completing a new zone or navigating somewhere unfamiliar, it\'s all here.'
+    ],
+    images: []
+  },
+  'wvw': {
+    icon: '⚔️',
+    title: 'WvW, PvP & Guilds',
+    body: [
+      'Live World vs. World objective maps showing current team ownership for every keep, tower, and camp — complete with tier and matchup info, updated in real time.',
+      'PvP stats and season rankings for your characters. Guild roster, vault storage, and mission progress all in one place — everything your guild needs, without logging in.'
+    ],
+    images: []
+  },
+  'daily': {
+    icon: '📅',
+    title: 'Daily Reset & Wizard\'s Vault',
+    body: [
+      'Stay on top of your daily routine without effort. See all daily and weekly objectives, your current Wizard\'s Vault astral acclaim balance, and which objectives you\'ve completed.',
+      'A live countdown to the next daily and weekly reset means you\'ll never accidentally let rewards expire.'
+    ],
+    images: []
+  },
+  'trading': {
+    icon: '💰',
+    title: 'Trading Post',
+    body: [
+      'The full GW2 Trading Post in your pocket. Search any item for live buy and sell prices, check your active listings and transaction history, and spot deals — all without launching the game.',
+      'Perfect for flipping, monitoring crafting material costs, or checking what a rare drop is worth before you sell.'
+    ],
+    images: []
+  }
+};
+
+function openFeatureModal(key) {
+  const f = FEATURES[key];
+  if (!f) return;
+  document.getElementById('modalIcon').textContent = f.icon;
+  document.getElementById('modalTitle').textContent = f.title;
+  const bodyEl = document.getElementById('modalBody');
+  bodyEl.innerHTML = '';
+  f.body.forEach(function(text) {
+    const p = document.createElement('p');
+    p.textContent = text;
+    bodyEl.appendChild(p);
+  });
+  const gallery = document.getElementById('modalGallery');
+  gallery.innerHTML = '';
+  if (f.images && f.images.length) {
+    f.images.forEach(function(src) {
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = f.title + ' screenshot';
+      gallery.appendChild(img);
+    });
+    gallery.style.display = 'flex';
+  } else {
+    gallery.style.display = 'none';
+  }
+  document.getElementById('featureModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFeatureModal() {
+  document.getElementById('featureModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.querySelectorAll('.card[data-feature]').forEach(function(card) {
+  card.addEventListener('click', function() { openFeatureModal(card.dataset.feature); });
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeatureModal(card.dataset.feature); }
+  });
+});
+
+document.getElementById('featureModal').addEventListener('click', function(e) {
+  if (e.target === this) closeFeatureModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeFeatureModal();
+});
+</script>
 
 </body>
 </html>
