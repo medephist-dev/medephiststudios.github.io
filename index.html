@@ -313,6 +313,59 @@
     .hero-buttons { display: flex; flex-direction: column; align-items: center; gap: 10px; }
   }
 
+  /* SCREENSHOT GALLERY */
+  .screenshots {
+    padding: 64px 0;
+    border-bottom: 1px solid #2a2a38;
+    overflow: hidden;
+  }
+  .screenshots .section-title { margin-bottom: 36px; }
+  .screenshot-scroll {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 0 24px 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .screenshot-scroll::-webkit-scrollbar { display: none; }
+  .screenshot-item {
+    flex: 0 0 auto;
+    width: 200px;
+    scroll-snap-align: start;
+    text-align: center;
+    cursor: pointer;
+  }
+  .screenshot-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 18px;
+    border: 1px solid #2a2a38;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    display: block;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .screenshot-item:hover img {
+    transform: translateY(-4px);
+    border-color: rgba(200,168,75,0.5);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+  }
+  .screenshot-item figcaption {
+    margin-top: 10px;
+    font-size: 0.8rem;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .screenshot-item:hover figcaption { color: var(--gold); }
+  @media (min-width: 920px) {
+    .screenshot-scroll {
+      justify-content: center;
+      overflow-x: visible;
+      padding: 0 24px 0;
+    }
+  }
+
   /* FEATURE MODALS */
   .card[data-feature] { cursor: pointer; }
   .card[data-feature]::after {
@@ -572,7 +625,7 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
   <a href="#privacy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Privacy</a>
-  <a href="#support" onclick="document.getElementById('mobileMenu').classList.remove('open')">📧 Contact Support</a>
+  <a href="contact-support.html">📧 Contact Support</a>
   <a href="bug-report.html">🐛 Report a Bug</a>
   <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')">♥ Donate</a>
   <a href="privacy-policy.html">Privacy Policy</a>
@@ -590,6 +643,31 @@
     <a href="#donate" class="btn-secondary">♥ Support Development</a>
   </div>
   <p class="hero-note">Free forever · Android · Requires a GW2 account</p>
+</section>
+
+<section class="screenshots">
+  <div style="max-width:1000px;margin:0 auto;padding:0 24px;">
+    <p class="section-label">Screenshots</p>
+    <h2 class="section-title">See it in action</h2>
+  </div>
+  <div class="screenshot-scroll" role="list">
+    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('notifications')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('notifications')}">
+      <img src="screenshots/notifications-1.jpg" alt="Push notification alarm for a world boss" loading="lazy">
+      <figcaption>Notification Alarms</figcaption>
+    </figure>
+    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('boss-timers')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('boss-timers')}">
+      <img src="screenshots/boss-timers-1.jpg" alt="World boss timer countdown screen" loading="lazy">
+      <figcaption>World Boss Timers</figcaption>
+    </figure>
+    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('crafting')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('crafting')}">
+      <img src="screenshots/crafting-1.jpg" alt="Crafting assistant with recipe breakdown" loading="lazy">
+      <figcaption>Crafting Assistant</figcaption>
+    </figure>
+    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('trading')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('trading')}">
+      <img src="screenshots/trading-1.jpg" alt="Trading Post with live item prices" loading="lazy">
+      <figcaption>Trading Post</figcaption>
+    </figure>
+  </div>
 </section>
 
 <section class="features" id="features">
@@ -670,7 +748,7 @@
     <a href="mailto:support@medephiststudios.com">Support</a>
     <a href="https://github.com/medephist-dev/medephiststudios.github.io">GitHub</a>
   </div>
-  <p class="disclaimer">Tyrian Vault is an unofficial companion app and is not affiliated with ArenaNet or NCSoft. Guild Wars 2 is a trademark of ArenaNet, LLC. © 2026 Medephist Studios.</p>
+  <p class="disclaimer">Tyrian Vault v0.20.2 · Tyrian Vault is an unofficial companion app and is not affiliated with ArenaNet or NCSoft. Guild Wars 2 is a trademark of ArenaNet, LLC. © 2026 Medephist Studios.</p>
 </footer>
 
 
@@ -688,7 +766,7 @@
     <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
 
     <div class="modal-carousel" id="modalCarousel" style="display:none">
-      <img class="modal-carousel-img" id="carouselImg" src="" alt="">
+      <img class="modal-carousel-img" id="carouselImg" alt="">
       <button class="carousel-arrow carousel-prev" id="carouselPrev" aria-label="Previous image">‹</button>
       <button class="carousel-arrow carousel-next" id="carouselNext" aria-label="Next image">›</button>
       <div class="carousel-dots" id="carouselDots"></div>
