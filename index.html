@@ -925,7 +925,6 @@
   <div>
     <a href="privacy-policy.html">Privacy Policy</a>
     <a href="contact-support.html">Support</a>
-    <a href="https://github.com/medephist-dev/medephiststudios.github.io">GitHub</a>
   </div>
   <p class="disclaimer">Tyrian Vault v0.31.0 · Tyrian Vault is an unofficial fan-made companion app and is not affiliated with, endorsed, sponsored, or approved by ArenaNet or NCSOFT.</p>
   <p class="disclaimer">Guild Wars Games &copy; ArenaNet LLC. All rights reserved. NCSOFT, ArenaNet, Guild Wars, Guild Wars 2, GW2, Heart of Thorns, Path of Fire, End of Dragons, Secrets of the Obscure, Janthir Wilds, Visions of Eternity, and all associated logos, designs, and composite marks are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.</p>
@@ -1197,36 +1196,4 @@ document.getElementById('lightbox').addEventListener('touchstart', function(e) {
   lbTouchStartX = e.changedTouches[0].clientX;
   lbTouchStartY = e.changedTouches[0].clientY;
 }, { passive: true });
-document.getElementById('lightbox').addEventListener('touchend', function(e) {
-  if (!carouselImages.length) return;
-  var dx = lbTouchStartX - e.changedTouches[0].clientX;
-  var dy = lbTouchStartY - e.changedTouches[0].clientY;
-  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
-  if (dx > 0) {
-    setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
-  } else {
-    setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
-  }
-}, { passive: true });
-document.addEventListener('keydown', function(e) {
-  var lb = document.getElementById('lightbox');
-  if (!lb.classList.contains('open')) return;
-  if (e.key === 'Escape') { closeLightbox(); return; }
-  if (e.key === 'ArrowRight') setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
-  if (e.key === 'ArrowLeft') setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
-});
-
-// Touch swipe support for carousel
-var swipeStartX = 0;
-var swipeStartY = 0;
-document.getElementById('modalCarousel').addEventListener('touchstart', function(e) {
-  swipeStartX = e.changedTouches[0].clientX;
-  swipeStartY = e.changedTouches[0].clientY;
-}, { passive: true });
-document.getElementById('modalCarousel').addEventListener('touchend', function(e) {
-  if (!carouselImages.length) return;
-  var dx = swipeStartX - e.changedTouches[0].clientX;
-  var dy = swipeStartY - e.changedTouches[0].clientY;
-  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
-  if (dx > 0) {
-    setCarouse
+document.getElementById('lightbox').ad
