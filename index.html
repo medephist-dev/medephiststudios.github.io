@@ -486,6 +486,7 @@
   footer a { color: var(--muted); margin: 0 10px; }
   footer a:hover { color: var(--gold); }
   footer .disclaimer { margin: 14px auto 0; font-size: 0.74rem; color: #555; max-width: 620px; }
+  footer .copyright { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.74rem; color: #555; }
 
   /* FEATURE MODAL */
   .modal-overlay {
@@ -926,7 +927,8 @@
     <a href="contact-support.html">Support</a>
     <a href="https://github.com/medephist-dev/medephiststudios.github.io">GitHub</a>
   </div>
-  <p class="disclaimer">Tyrian Vault v0.31.0 · Tyrian Vault is an unofficial companion app and is not affiliated with ArenaNet or NCSoft. Guild Wars 2 is a trademark of ArenaNet, LLC. © 2026 Medephist Studios.</p>
+  <p class="disclaimer">Tyrian Vault v0.31.0 · Tyrian Vault is an unofficial companion app and is not affiliated with or endorsed by ArenaNet or NCSoft. Guild Wars 2 and all related trademarks and assets are the property of ArenaNet, LLC.</p>
+  <p class="copyright">Website © 2026 Medephist Studios.</p>
 </footer>
 
 
@@ -1226,12 +1228,4 @@ document.getElementById('modalCarousel').addEventListener('touchend', function(e
   var dy = swipeStartY - e.changedTouches[0].clientY;
   if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
   if (dx > 0) {
-    setCarouselSlide((carouselIndex + 1) % carouselImages.length, true);
-  } else {
-    setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, true);
-  }
-}, { passive: true });
-</script>
-
-</body>
-</html>
+    setCarouse
