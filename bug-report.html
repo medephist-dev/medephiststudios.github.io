@@ -223,6 +223,18 @@
 </div>
 
 <script>
+// Pre-fill from query params — the Tyrian Vault app appends these when it opens this page
+// (phone model, Android version, app version), so users don't have to type them.
+(function () {
+  try {
+    var q = new URLSearchParams(window.location.search);
+    ['phone', 'android', 'appversion'].forEach(function (id) {
+      var v = q.get(id);
+      if (v) document.getElementById(id).value = v;
+    });
+  } catch (e) { /* very old browser — fields just stay blank */ }
+})();
+
 document.getElementById('bugForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
