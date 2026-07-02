@@ -5,271 +5,69 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tyrian Vault — GW2 Companion App | Medephist Studios</title>
 <meta name="description" content="Tyrian Vault is a free GW2 companion for Android with real push notifications for boss timers — the feature no other GW2 app has. Plus crafting, WvW, maps, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
     --gold: #c8a84b;
     --gold-light: #e8c96a;
+    --gold-dim: rgba(200,168,75,0.12);
     --dark: #0e0e12;
     --dark2: #16161e;
     --dark3: #1e1e2a;
     --text: #d4cfc4;
     --muted: #8a8578;
     --accent: #7b4fa6;
+    --border: #2a2a38;
+    --heading: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    --body: 'Inter', 'Segoe UI', system-ui, sans-serif;
   }
 
   body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-family: var(--body);
     background: var(--dark);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.65;
+    font-size: 16px;
   }
 
+  h1, h2, h3 { font-family: var(--heading); }
   a { color: var(--gold); text-decoration: none; }
   a:hover { color: var(--gold-light); }
 
   /* HEADER */
+  .site-top {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+  }
   header {
-    background: var(--dark2);
-    border-bottom: 1px solid #2a2a38;
-    padding: 16px 32px;
+    background: rgba(14,14,18,0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
-  .logo { font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.5px; }
-  .logo span { color: var(--muted); font-weight: 400; }
-  nav a { color: var(--muted); font-size: 0.9rem; margin-left: 24px; }
+  .logo { font-family: var(--heading); font-size: 1.05rem; font-weight: 800; color: var(--gold); letter-spacing: 0.4px; }
+  .logo span { color: var(--muted); font-weight: 500; }
+  nav a { color: var(--muted); font-size: 0.88rem; font-weight: 500; margin-left: 28px; transition: color 0.2s; }
   nav a:hover { color: var(--gold); }
-
-  /* DROPDOWN NAV */
-  .nav-dropdown { position: relative; display: inline-block; margin-left: 24px; }
-  .nav-dropdown-btn {
-    background: none;
-    border: 1px solid #3a3a4a;
-    color: var(--muted);
-    font-size: 0.9rem;
-    padding: 6px 14px;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .nav-dropdown-btn:hover { border-color: var(--gold); color: var(--gold); }
-  .nav-dropdown-menu {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
-    background: var(--dark3);
-    border: 1px solid #3a3a4a;
-    border-radius: 8px;
-    min-width: 180px;
-    z-index: 100;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
-  }
-  .nav-dropdown:hover .nav-dropdown-menu,
-  .nav-dropdown-btn:focus + .nav-dropdown-menu { display: block; }
-  .nav-dropdown-menu a {
-    display: block;
-    padding: 10px 16px;
-    color: var(--text);
-    font-size: 0.9rem;
-    margin: 0;
-    border-bottom: 1px solid #2a2a38;
-    transition: background 0.15s, color 0.15s;
-  }
-  .nav-dropdown-menu a:last-child { border-bottom: none; }
-  .nav-dropdown-menu a:hover { background: var(--dark2); color: var(--gold); }
-
-  /* HERO */
-  .hero {
-    text-align: center;
-    padding: 80px 24px 64px;
-    background: linear-gradient(180deg, var(--dark2) 0%, var(--dark) 100%);
-    border-bottom: 1px solid #2a2a38;
-  }
-  .hero-title-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 18px;
-    margin-bottom: 0;
-  }
-  .hero-icon {
-    width: 72px;
-    height: 72px;
-    border-radius: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-    flex-shrink: 0;
-  }
-  .hero-badge {
-    display: inline-block;
-    background: var(--dark3);
-    border: 1px solid var(--gold);
+  nav .nav-cta {
+    border: 1px solid rgba(200,168,75,0.45);
     color: var(--gold);
-    font-size: 0.75rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 20px;
-    margin-bottom: 20px;
-  }
-  .hero h1 {
-    font-size: clamp(2rem, 5vw, 3.2rem);
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 8px;
-    letter-spacing: -0.5px;
-  }
-  .hero h1 span { color: var(--gold); }
-  .hero .tagline {
-    font-size: 1.15rem;
-    color: var(--muted);
-    max-width: 520px;
-    margin: 0 auto 32px;
-  }
-  .btn-primary {
-    display: inline-block;
-    background: var(--gold);
-    color: #0e0e12;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 14px 32px;
+    padding: 7px 16px;
     border-radius: 8px;
-    transition: background 0.2s;
-  }
-  .btn-primary:hover { background: var(--gold-light); color: #0e0e12; }
-  .btn-secondary {
-    display: inline-block;
-    border: 1px solid var(--gold);
-    color: var(--gold);
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 13px 28px;
-    border-radius: 8px;
-    margin-left: 12px;
     transition: all 0.2s;
   }
-  .btn-secondary:hover { background: var(--gold); color: #0e0e12; }
-  .hero-buttons { margin-bottom: 12px; }
-  .hero-note { font-size: 0.8rem; color: var(--muted); }
+  nav .nav-cta:hover { background: var(--gold); color: var(--dark); }
 
-  /* FEATURES */
-  .features {
-    max-width: 1000px;
-    margin: 64px auto;
-    padding: 0 24px;
-  }
-  .section-label {
-    text-align: center;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 12px;
-  }
-  .section-title {
-    text-align: center;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #fff;
-    margin-bottom: 48px;
-  }
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-  }
-  .card {
-    background: var(--dark2);
-    border: 1px solid #2a2a38;
-    border-radius: 12px;
-    padding: 24px;
-    transition: border-color 0.2s;
-  }
-  .card:hover { border-color: var(--gold); }
-  .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
-  .card h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 6px; }
-  .card p { font-size: 0.9rem; color: var(--muted); line-height: 1.5; }
-
-  /* PRIVACY STRIP */
-  .privacy-strip {
-    background: var(--dark3);
-    border-top: 1px solid #2a2a38;
-    border-bottom: 1px solid #2a2a38;
-    text-align: center;
-    padding: 40px 24px;
-  }
-  .privacy-strip h2 { font-size: 1.3rem; color: #fff; margin-bottom: 8px; }
-  .privacy-strip p { color: var(--muted); font-size: 0.9rem; max-width: 560px; margin: 0 auto; }
-
-  /* DONATE */
-  .donate {
-    text-align: center;
-    padding: 64px 24px;
-    max-width: 600px;
-    margin: 0 auto;
-  }
-  .donate h2 { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
-  .donate p { color: var(--muted); margin-bottom: 28px; }
-  .btn-donate {
-    display: inline-block;
-    background: var(--accent);
-    color: #fff;
-    font-weight: 700;
-    font-size: 1rem;
-    padding: 14px 36px;
-    border-radius: 8px;
-    transition: opacity 0.2s;
-  }
-  .btn-donate:hover { opacity: 0.85; color: #fff; }
-
-  /* SUPPORT */
-  .support {
-    text-align: center;
-    padding: 64px 24px;
-    background: var(--dark2);
-    border-top: 1px solid #2a2a38;
-    border-bottom: 1px solid #2a2a38;
-  }
-  .support h2 { font-size: 1.6rem; font-weight: 700; color: #fff; margin-bottom: 10px; }
-  .support p { color: var(--muted); margin-bottom: 28px; max-width: 500px; margin-left: auto; margin-right: auto; margin-bottom: 28px; }
-  .support-buttons { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .btn-support {
-    display: inline-block;
-    border: 1px solid #3a3a4a;
-    background: var(--dark3);
-    color: var(--text);
-    font-weight: 600;
-    font-size: 0.95rem;
-    padding: 12px 24px;
-    border-radius: 8px;
-    transition: border-color 0.2s, color 0.2s;
-  }
-  .btn-support:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* FOOTER */
-  footer {
-    background: var(--dark2);
-    border-top: 1px solid #2a2a38;
-    text-align: center;
-    padding: 32px 24px;
-    font-size: 0.8rem;
-    color: var(--muted);
-  }
-  footer a { color: var(--muted); margin: 0 8px; }
-  footer a:hover { color: var(--gold); }
-  footer .disclaimer {
-    margin-top: 10px;
-    font-size: 0.75rem;
-    color: #555;
-    max-width: 600px;
-    margin: 10px auto 0;
-  }
-
-  /* HAMBURGER */
+  /* HAMBURGER + MOBILE MENU */
   .hamburger {
     display: none;
     flex-direction: column;
@@ -291,7 +89,7 @@
     display: none;
     flex-direction: column;
     background: var(--dark3);
-    border-top: 1px solid #2a2a38;
+    border-bottom: 1px solid var(--border);
     padding: 8px 0;
   }
   .mobile-menu a {
@@ -299,86 +97,397 @@
     padding: 12px 24px;
     color: var(--text);
     font-size: 1rem;
-    border-bottom: 1px solid #2a2a38;
+    border-bottom: 1px solid var(--border);
   }
   .mobile-menu a:last-child { border-bottom: none; }
   .mobile-menu a:hover { color: var(--gold); background: var(--dark2); }
   .mobile-menu.open { display: flex; }
 
-  @media (max-width: 600px) {
-    header { padding: 14px 16px; }
-    nav { display: none; }
-    .hamburger { display: flex; }
-    .btn-secondary { margin-left: 0; margin-top: 10px; display: block; }
-    .hero-buttons { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-  }
-
-  /* SCREENSHOT GALLERY */
-  .screenshots {
-    padding: 64px 0;
-    border-bottom: 1px solid #2a2a38;
+  /* HERO — asymmetric 60/40 */
+  .hero {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 900px 480px at 18% -10%, rgba(200,168,75,0.08), transparent 60%),
+      linear-gradient(180deg, var(--dark2) 0%, var(--dark) 100%);
     overflow: hidden;
   }
-  .screenshots .section-title { margin-bottom: 36px; }
-  .screenshot-scroll {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    padding: 0 24px 16px;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
+  .hero-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 96px 40px 88px;
+    display: grid;
+    grid-template-columns: 60fr 40fr;
+    gap: 56px;
+    align-items: center;
   }
-  .screenshot-scroll::-webkit-scrollbar { display: none; }
-  .screenshot-item {
-    flex: 0 0 auto;
-    width: 200px;
-    scroll-snap-align: start;
-    text-align: center;
-    cursor: pointer;
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.35);
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 26px;
   }
-  .screenshot-item img {
-    width: 100%;
-    height: auto;
-    border-radius: 18px;
-    border: 1px solid #2a2a38;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-    display: block;
-    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
   }
-  .screenshot-item:hover img {
-    transform: translateY(-4px);
-    border-color: rgba(200,168,75,0.5);
-    box-shadow: 0 16px 48px rgba(0,0,0,0.7);
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.08;
+    letter-spacing: -1.2px;
+    margin-bottom: 18px;
   }
-  .screenshot-item figcaption {
-    margin-top: 10px;
-    font-size: 0.8rem;
+  .hero h1 .grad {
+    background: linear-gradient(100deg, var(--gold) 20%, var(--gold-light) 60%, #f4e0a0 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero .tagline {
+    font-size: 1.12rem;
     color: var(--muted);
-    transition: color 0.2s;
+    max-width: 480px;
+    margin-bottom: 26px;
   }
-  .screenshot-item:hover figcaption { color: var(--gold); }
-  @media (min-width: 920px) {
-    .screenshot-scroll {
-      justify-content: center;
-      overflow-x: visible;
-      padding: 0 24px 0;
-    }
+  .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
+  .chip {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+  .chip::before { content: '✓ '; color: var(--gold); font-weight: 700; }
+  .hero-buttons { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(120deg, var(--gold), var(--gold-light));
+    color: var(--dark);
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 15px 32px;
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(200,168,75,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(200,168,75,0.35); color: var(--dark); }
+  .link-secondary {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .link-secondary:hover { color: var(--gold); border-color: var(--gold); }
+  .hero-note { font-size: 0.8rem; color: #5e5a4f; }
+
+  /* PHONE MOCKUP */
+  .hero-visual { display: flex; justify-content: center; }
+  .phone {
+    position: relative;
+    width: 272px;
+    border-radius: 38px;
+    padding: 12px;
+    background: linear-gradient(160deg, #23232f, #101017);
+    border: 1px solid #343444;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.6),
+      0 40px 90px rgba(0,0,0,0.7),
+      0 0 80px rgba(200,168,75,0.07);
+    transform: rotate(2.5deg);
+  }
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 22px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #06060a;
+    border: 1px solid #2c2c3a;
+    z-index: 2;
+  }
+  .phone img {
+    display: block;
+    width: 100%;
+    border-radius: 28px;
   }
 
-  /* FEATURE MODALS */
-  .card[data-feature] { cursor: pointer; }
-  .card[data-feature]::after {
+  /* SECTION SCAFFOLD */
+  section { padding: 96px 40px; }
+  .section-inner { max-width: 1160px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.6px;
+    margin-bottom: 14px;
+  }
+  .section-sub { color: var(--muted); max-width: 560px; margin-bottom: 0; }
+  .center { text-align: center; }
+  .center .section-sub { margin-left: auto; margin-right: auto; }
+  .divider {
+    width: 64px;
+    height: 1px;
+    margin: 22px auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* FEATURE FOCUS ROWS */
+  .focus-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+    margin-top: 72px;
+  }
+  .focus-row.flip .focus-text { order: 2; }
+  .focus-row.flip .focus-media { order: 1; }
+  .focus-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(200,168,75,0.3);
+    background: var(--gold-dim);
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+  }
+  .focus-text h3 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+  .focus-text p { color: var(--muted); font-size: 0.98rem; margin-bottom: 12px; }
+  .focus-text .highlight { color: var(--text); }
+  .focus-more {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--body);
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+  .focus-more:hover { opacity: 1; }
+  .focus-media { display: flex; justify-content: center; gap: 20px; }
+  .focus-media img {
+    width: min(46%, 210px);
+    border-radius: 20px;
+    border: 1px solid #333342;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .focus-media img:hover { transform: translateY(-6px); border-color: rgba(200,168,75,0.5); }
+  .focus-media img:nth-child(2) { margin-top: 36px; }
+
+  /* 3-COLUMN FEATURE GRID */
+  .features-grid-section { background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .fcard {
+    background: rgba(30,30,42,0.55);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 34px 30px;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+  .fcard:hover {
+    transform: translateY(-4px);
+    border-color: rgba(200,168,75,0.4);
+    background: rgba(34,34,48,0.85);
+  }
+  .fcard-icon {
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.25);
+    border-radius: 10px;
+    margin-bottom: 18px;
+  }
+  .fcard h3 { font-size: 1.02rem; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.2px; }
+  .fcard p { font-size: 0.88rem; color: var(--muted); }
+  .fcard[data-feature] { cursor: pointer; }
+  .fcard[data-feature]::after {
     content: 'Learn more →';
     display: block;
-    margin-top: 12px;
+    margin-top: 14px;
     font-size: 0.8rem;
+    font-weight: 600;
     color: var(--gold);
     opacity: 0.55;
     transition: opacity 0.2s;
   }
-  .card[data-feature]:hover::after { opacity: 1; }
+  .fcard[data-feature]:hover::after { opacity: 1; }
 
+  /* PRIVACY SHIELD */
+  .privacy-section { padding: 110px 40px; }
+  .shield-box {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 500px 260px at 50% 0%, rgba(200,168,75,0.09), transparent 70%),
+      var(--dark2);
+    border: 1px solid rgba(200,168,75,0.28);
+    border-radius: 20px;
+    padding: 64px 48px 56px;
+    box-shadow: 0 0 60px rgba(200,168,75,0.05), 0 32px 80px rgba(0,0,0,0.5);
+  }
+  .shield-icon {
+    width: 58px; height: 58px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, rgba(200,168,75,0.18), rgba(200,168,75,0.04));
+    border: 1px solid rgba(200,168,75,0.4);
+    border-radius: 16px;
+  }
+  .shield-icon svg { width: 28px; height: 28px; stroke: var(--gold-light); }
+  .shield-box h2 {
+    font-family: var(--heading);
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+  .shield-box > p { color: var(--muted); max-width: 600px; margin: 0 auto 30px; font-size: 0.98rem; }
+  .shield-points {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 34px;
+  }
+  .shield-point {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    padding: 7px 16px;
+    border-radius: 999px;
+  }
+  .shield-point::before { content: '🔒 '; font-size: 0.75rem; }
+  .btn-shield {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--dark);
+    border: 1px solid rgba(200,168,75,0.5);
+    color: var(--gold-light);
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 13px 28px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+  }
+  .btn-shield:hover { background: var(--gold); color: var(--dark); box-shadow: 0 8px 28px rgba(200,168,75,0.3); }
+
+  /* SUPPORT + DONATE */
+  .closing { background: var(--dark2); border-top: 1px solid var(--border); }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .closing-card {
+    background: rgba(30,30,42,0.55);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 44px 40px;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .closing-card:hover { border-color: rgba(200,168,75,0.35); transform: translateY(-3px); }
+  .closing-card h2 { font-family: var(--heading); font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.3px; }
+  .closing-card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 24px; }
+  .btn-outline {
+    display: inline-block;
+    border: 1px solid #3a3a4a;
+    background: var(--dark3);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 11px 22px;
+    border-radius: 9px;
+    margin-right: 10px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-donate {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    border-radius: 9px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-donate:hover { opacity: 0.88; transform: translateY(-2px); color: #fff; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); margin: 0 10px; }
+  footer a:hover { color: var(--gold); }
+  footer .disclaimer { margin: 14px auto 0; font-size: 0.74rem; color: #555; max-width: 620px; }
+
+  /* FEATURE MODAL */
   .modal-overlay {
     display: none;
     position: fixed;
@@ -582,7 +691,7 @@
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
   .modal-icon { font-size: 1.9rem; line-height: 1; flex-shrink: 0; }
-  .modal-title { font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.3; margin: 0; }
+  .modal-title { font-family: var(--heading); font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.3; margin: 0; }
   .modal-body p {
     color: #9e9990;
     font-size: 0.9rem;
@@ -599,157 +708,216 @@
     .modal-content { padding: 16px 20px 32px; }
     .carousel-arrow { display: none; }
   }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    header { padding: 14px 20px; }
+    nav { display: none; }
+    .hamburger { display: flex; }
+    section, .privacy-section { padding: 64px 20px; }
+    .hero-inner { grid-template-columns: 1fr; padding: 64px 20px; gap: 48px; text-align: center; }
+    .hero .tagline { margin-left: auto; margin-right: auto; }
+    .hero-chips, .hero-buttons { justify-content: center; }
+    .phone { transform: rotate(0deg); width: 240px; }
+    .focus-row { grid-template-columns: 1fr; gap: 40px; margin-top: 56px; }
+    .focus-row.flip .focus-text { order: 1; }
+    .focus-row.flip .focus-media { order: 2; }
+    .grid3 { grid-template-columns: 1fr; gap: 16px; margin-top: 40px; }
+    .closing-grid { grid-template-columns: 1fr; }
+    .shield-box { padding: 44px 24px; }
+  }
+  @media (min-width: 901px) and (max-width: 1100px) {
+    .grid3 { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 </head>
 <body>
 
-<header>
-  <div class="logo">Medephist<span> Studios</span></div>
-  <nav>
-    <a href="#features">Features</a>
-    <a href="#privacy">Privacy</a>
-    <div class="nav-dropdown">
-      <button class="nav-dropdown-btn">More ▾</button>
-      <div class="nav-dropdown-menu">
-        <a href="contact-support.html">📧 Contact Support</a>
-        <a href="bug-report.html">🐛 Report a Bug</a>
-        <a href="#donate">♥ Donate</a>
-        <a href="privacy-policy.html">Privacy Policy</a>
-      </div>
-    </div>
-  </nav>
-  <button class="hamburger" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
-    <span></span><span></span><span></span>
-  </button>
-</header>
-<div class="mobile-menu" id="mobileMenu">
-  <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
-  <a href="#privacy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Privacy</a>
-  <a href="contact-support.html">📧 Contact Support</a>
-  <a href="bug-report.html">🐛 Report a Bug</a>
-  <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')">♥ Donate</a>
-  <a href="privacy-policy.html">Privacy Policy</a>
+<div class="site-top">
+  <header>
+    <div class="logo">Medephist<span> Studios</span></div>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="contact-support.html">Support</a>
+      <a href="bug-report.html">Report a Bug</a>
+      <a href="#" class="nav-cta">Get the App</a>
+    </nav>
+    <button class="hamburger" aria-label="Menu" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
+    <a href="#privacy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Privacy</a>
+    <a href="contact-support.html">📧 Contact Support</a>
+    <a href="bug-report.html">🐛 Report a Bug</a>
+    <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')">♥ Donate</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+  </div>
 </div>
 
-<section class="hero">
-  <div class="hero-badge">Free Android App</div>
-  <div class="hero-title-row">
-    <img src="app-icon.png" alt="Tyrian Vault icon" class="hero-icon">
-    <h1>Tyrian <span>Vault</span></h1>
-  </div>
-  <p class="tagline">The unofficial Guild Wars 2 companion built by a player, for players. Free. No ads. No paywalls.</p>
-  <div class="hero-buttons">
-    <a href="#" class="btn-primary">Get it on Google Play</a>
-    <a href="#donate" class="btn-secondary">♥ Support Development</a>
-  </div>
-  <p class="hero-note">Free forever · Android · Requires a GW2 account</p>
-</section>
-
-<section class="screenshots">
-  <div style="max-width:1000px;margin:0 auto;padding:0 24px;">
-    <p class="section-label">Screenshots</p>
-    <h2 class="section-title">See it in action</h2>
-  </div>
-  <div class="screenshot-scroll" role="list">
-    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('notifications')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('notifications')}">
-      <img src="screenshots/notifications-1.jpg" alt="Push notification alarm for a world boss" loading="lazy">
-      <figcaption>Notification Alarms</figcaption>
-    </figure>
-    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('boss-timers')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('boss-timers')}">
-      <img src="screenshots/boss-timers-1.jpg" alt="World boss timer countdown screen" loading="lazy">
-      <figcaption>World Boss Timers</figcaption>
-    </figure>
-    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('crafting')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('crafting')}">
-      <img src="screenshots/crafting-1.jpg" alt="Pricing calculator with craft cost breakdown" loading="lazy">
-      <figcaption>Pricing Calculator</figcaption>
-    </figure>
-    <figure class="screenshot-item" role="listitem" onclick="openFeatureModal('trading')" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFeatureModal('trading')}">
-      <img src="screenshots/trading-1.jpg" alt="Trading Post with live item prices" loading="lazy">
-      <figcaption>Trading Post</figcaption>
-    </figure>
-  </div>
-</section>
-
-<section class="features" id="features">
-  <p class="section-label">What's Inside</p>
-  <h2 class="section-title">Everything you need in Tyria</h2>
-  <div class="grid">
-    <div class="card" data-feature="notifications" style="border-color: var(--gold);" tabindex="0">
-      <div class="card-icon">🔔</div>
-      <h3>Real Notifications & Alarms</h3>
-      <p>The feature no other GW2 app has. Set an alarm for any world boss or event and get a push notification with sound — even when the app is closed and your screen is off. Put your phone down. We'll tell you when it's time.</p>
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">Free Android App</div>
+      <h1>Your Guild Wars&nbsp;2 command center, <span class="grad">in your pocket.</span></h1>
+      <p class="tagline">Tyrian Vault is the unofficial GW2 companion built by a player, for players — with the one feature no other app has: real push notification alarms.</p>
+      <div class="hero-chips">
+        <span class="chip">Free forever</span>
+        <span class="chip">No ads</span>
+        <span class="chip">No paywalls</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="#" class="btn-primary">▶ Get it on Google Play</a>
+        <a href="#features" class="link-secondary">See what's inside ↓</a>
+      </div>
+      <p class="hero-note">Android · Requires a GW2 account · v0.31.0</p>
     </div>
-    <div class="card" data-feature="boss-timers" tabindex="0">
-      <div class="card-icon">⏱️</div>
-      <h3>World Boss Timers</h3>
-      <p>Live countdowns for every world boss across all maps. Never miss Tequatl, Triple Trouble, or the Shatterer again.</p>
-    </div>
-    <div class="card" data-feature="crafting" tabindex="0">
-      <div class="card-icon">🧮</div>
-      <h3>Pricing Calculator</h3>
-      <p>See exactly what it costs to craft any item versus buying it on the Trading Post, plus an instant view of everything you can craft right now from materials you already have.</p>
-    </div>
-    <div class="card" data-feature="legendary" tabindex="0">
-      <div class="card-icon">🏆</div>
-      <h3>Legendary Crafting Tracker</h3>
-      <p>Track your legendary progress, see what you still need, and compare make-vs-buy costs with live Trading Post prices.</p>
-    </div>
-    <div class="card" data-feature="account" tabindex="0">
-      <div class="card-icon">👤</div>
-      <h3>Account & Characters</h3>
-      <p>View your characters, equipment, wallet, currencies, and inventory at a glance. Supports multiple GW2 accounts.</p>
-    </div>
-    <div class="card" data-feature="maps" tabindex="0">
-      <div class="card-icon">🗺️</div>
-      <h3>Interactive Maps</h3>
-      <p>Points of interest, waypoints, boss spawn locations, and mastery insights — for every zone in Tyria.</p>
-    </div>
-    <div class="card" data-feature="wvw" tabindex="0">
-      <div class="card-icon">⚔️</div>
-      <h3>WvW, PvP & Guilds</h3>
-      <p>Live WvW objective maps with team ownership and tier badges. PvP stats and leaderboards. Guild roster, storage, and missions.</p>
-    </div>
-    <div class="card" data-feature="daily" tabindex="0">
-      <div class="card-icon">📅</div>
-      <h3>Daily Reset & Wizard's Vault</h3>
-      <p>Track your daily and weekly objectives, Wizard's Vault progress, and reset timers — all in one place.</p>
-    </div>
-    <div class="card" data-feature="trading" tabindex="0">
-      <div class="card-icon">💰</div>
-      <h3>Trading Post</h3>
-      <p>Check live item prices, track your listings, and find the best deals without launching the game.</p>
-    </div>
-    <div class="card" data-feature="build-creator" tabindex="0">
-      <div class="card-icon">🛠️</div>
-      <h3>Build Creator</h3>
-      <p>Build any profession from scratch with traits, skills, and both land and water skill bars — or paste in a build code from the game to save and reference later.</p>
-    </div>
-    <div class="card" data-feature="achievements" tabindex="0">
-      <div class="card-icon">🌟</div>
-      <h3>Achievements</h3>
-      <p>Browse and search every achievement in the game, filtered by category, with live progress pulled straight from your account.</p>
+    <div class="hero-visual">
+      <div class="phone">
+        <img src="screenshots/notifications-1.jpg" alt="Tyrian Vault running on Android — world boss notification alarm">
+      </div>
     </div>
   </div>
 </section>
 
-<section class="privacy-strip" id="privacy">
-  <h2>🔒 Your data stays yours</h2>
-  <p>Tyrian Vault connects using your own personal GW2 API key — generated by you, stored only on your device. We never see it, store it, or share it. No account required on our end.</p>
-</section>
+<!-- FEATURE FOCUS ROWS -->
+<section id="features">
+  <div class="section-inner">
+    <div class="center">
+      <p class="section-label">Signature Features</p>
+      <h2 class="section-title">Built around the things other apps can't do</h2>
+      <p class="section-sub">Two heavyweight features anchor Tyrian Vault. Everything else orbits around them.</p>
+      <div class="divider"></div>
+    </div>
 
-<section class="support" id="support">
-  <h2>Need Help?</h2>
-  <p>Found a bug, have a question, or just want to share feedback? We'd love to hear from you.</p>
-  <div class="support-buttons">
-    <a href="contact-support.html" class="btn-support">📧 Contact Support</a>
-    <a href="bug-report.html" class="btn-support">🐛 Report a Bug</a>
+    <div class="focus-row">
+      <div class="focus-text">
+        <span class="focus-kicker">🔔 Exclusive</span>
+        <h3>Real Notifications &amp; Alarms</h3>
+        <p class="highlight">The feature no other GW2 app has. Set an alarm for any world boss or event and get a true OS-level push notification with sound — even when the app is closed and your screen is off.</p>
+        <p>These aren't in-app countdowns. They're real system alarms that wake your device. Set it before a long farm session and put your phone down — we'll tell you when it's time.</p>
+        <button class="focus-more" onclick="openFeatureModal('notifications')">Learn more →</button>
+      </div>
+      <div class="focus-media">
+        <img src="screenshots/notifications-2.jpg" alt="Notification alarm setup screen" loading="lazy" onclick="openFeatureModal('notifications')">
+        <img src="screenshots/notifications-3.jpg" alt="Push notification on lock screen" loading="lazy" onclick="openFeatureModal('notifications')">
+      </div>
+    </div>
+
+    <div class="focus-row flip">
+      <div class="focus-text">
+        <span class="focus-kicker">🧮 Smart Crafting</span>
+        <h3>Pricing Calculator &amp; Crafting Assistant</h3>
+        <p class="highlight">Search any craftable item and instantly compare its Trading Post price against the cost to craft it yourself — broken down material by material.</p>
+        <p>The Can Craft view shows every item you can make right now from materials you already have. No tab-switching, no manual counting, no spreadsheets.</p>
+        <button class="focus-more" onclick="openFeatureModal('crafting')">Learn more →</button>
+      </div>
+      <div class="focus-media">
+        <img src="screenshots/crafting-1.jpg" alt="Craft-vs-buy cost breakdown" loading="lazy" onclick="openFeatureModal('crafting')">
+        <img src="screenshots/crafting-2.jpg" alt="Can Craft materials view" loading="lazy" onclick="openFeatureModal('crafting')">
+      </div>
+    </div>
   </div>
 </section>
 
-<section class="donate" id="donate">
-  <h2>Support the Project</h2>
-  <p>Tyrian Vault is free and always will be. If it's saved you time or made your adventures easier, a small donation helps keep development going.</p>
-  <a href="https://ko-fi.com/medephiststudios" target="_blank" rel="noopener" class="btn-donate">♥ Buy me a coffee</a>
+<!-- FEATURE GRID -->
+<section class="features-grid-section">
+  <div class="section-inner">
+    <div class="center">
+      <p class="section-label">What's Inside</p>
+      <h2 class="section-title">Everything you need in Tyria</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="grid3">
+      <div class="fcard" data-feature="boss-timers" tabindex="0">
+        <div class="fcard-icon">⏱️</div>
+        <h3>World Boss Timers</h3>
+        <p>Live countdowns for every world boss across all maps. Never miss Tequatl, Triple Trouble, or the Shatterer again.</p>
+      </div>
+      <div class="fcard" data-feature="legendary" tabindex="0">
+        <div class="fcard-icon">🏆</div>
+        <h3>Legendary Crafting Tracker</h3>
+        <p>Track your legendary progress, see what you still need, and compare make-vs-buy costs with live Trading Post prices.</p>
+      </div>
+      <div class="fcard" data-feature="trading" tabindex="0">
+        <div class="fcard-icon">💰</div>
+        <h3>Trading Post</h3>
+        <p>Check live item prices, track your listings, and find the best deals without launching the game.</p>
+      </div>
+      <div class="fcard" data-feature="account" tabindex="0">
+        <div class="fcard-icon">👤</div>
+        <h3>Account &amp; Characters</h3>
+        <p>View your characters, equipment, wallet, currencies, and inventory at a glance. Supports multiple GW2 accounts.</p>
+      </div>
+      <div class="fcard" data-feature="maps" tabindex="0">
+        <div class="fcard-icon">🗺️</div>
+        <h3>Interactive Maps</h3>
+        <p>Points of interest, waypoints, boss spawn locations, and mastery insights — for every zone in Tyria.</p>
+      </div>
+      <div class="fcard" data-feature="wvw" tabindex="0">
+        <div class="fcard-icon">⚔️</div>
+        <h3>WvW, PvP &amp; Guilds</h3>
+        <p>Live WvW objective maps with team ownership and tier badges. PvP stats and leaderboards. Guild roster, storage, and missions.</p>
+      </div>
+      <div class="fcard" data-feature="daily" tabindex="0">
+        <div class="fcard-icon">📅</div>
+        <h3>Daily Reset &amp; Wizard's Vault</h3>
+        <p>Track your daily and weekly objectives, Wizard's Vault progress, and reset timers — all in one place.</p>
+      </div>
+      <div class="fcard" data-feature="build-creator" tabindex="0">
+        <div class="fcard-icon">🛠️</div>
+        <h3>Build Creator</h3>
+        <p>Build any profession from scratch with traits, skills, and both land and water skill bars — or paste in a build code from the game.</p>
+      </div>
+      <div class="fcard" data-feature="achievements" tabindex="0">
+        <div class="fcard-icon">🌟</div>
+        <h3>Achievements</h3>
+        <p>Browse and search every achievement in the game, filtered by category, with live progress pulled straight from your account.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY SHIELD -->
+<section class="privacy-section" id="privacy">
+  <div class="shield-box">
+    <div class="shield-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    </div>
+    <h2>Your data stays yours</h2>
+    <p>Tyrian Vault connects using your own personal GW2 API key — generated by you, stored only on your device. We never see it, store it, or share it. No account required on our end.</p>
+    <div class="shield-points">
+      <span class="shield-point">Key stored on-device only</span>
+      <span class="shield-point">No tracking or analytics</span>
+      <span class="shield-point">No account required</span>
+    </div>
+    <a class="btn-shield" href="privacy-policy.html">Read the Privacy Policy</a>
+  </div>
+</section>
+
+<!-- SUPPORT + DONATE -->
+<section class="closing" id="donate">
+  <div class="section-inner">
+    <div class="closing-grid">
+      <div class="closing-card" id="support">
+        <h2>Need help?</h2>
+        <p>Found a bug, have a question, or just want to share feedback? We'd love to hear from you.</p>
+        <a href="contact-support.html" class="btn-outline">📧 Contact Support</a>
+        <a href="bug-report.html" class="btn-outline">🐛 Report a Bug</a>
+      </div>
+      <div class="closing-card">
+        <h2>Support the project</h2>
+        <p>Tyrian Vault is free and always will be. If it's saved you time, a small donation keeps development going.</p>
+        <a href="https://ko-fi.com/medephiststudios" target="_blank" rel="noopener" class="btn-donate">♥ Buy me a coffee</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <footer>
@@ -977,7 +1145,7 @@ document.getElementById('carouselNext').addEventListener('click', function() {
 });
 document.getElementById('modalClose').addEventListener('click', closeFeatureModal);
 
-document.querySelectorAll('.card[data-feature]').forEach(function(card) {
+document.querySelectorAll('.fcard[data-feature]').forEach(function(card) {
   card.addEventListener('click', function() { openFeatureModal(card.dataset.feature); });
   card.addEventListener('keydown', function(e) {
     if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeatureModal(card.dataset.feature); }
