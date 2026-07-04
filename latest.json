@@ -1,0 +1,5 @@
+{
+  "version": "0.34.0",
+  "url": "https://medephiststudios.com",
+  "notes": "Adds in-app update check, a Privacy Policy link, and trims unused Android permissions."
+}
