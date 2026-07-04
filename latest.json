@@ -1,5 +1,5 @@
 {
-  "version": "0.34.0",
+  "version": "0.34.1",
   "url": "https://medephiststudios.com",
-  "notes": "Adds in-app update check, a Privacy Policy link, and trims unused Android permissions."
+  "notes": "Exact-alarm permission now meets Google Play's compliance requirements, plus behind-the-scenes housekeeping."
 }
