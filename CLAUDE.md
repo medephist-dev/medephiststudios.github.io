@@ -11,6 +11,14 @@ This is the GitHub Pages site for **medephiststudios.com**, the marketing/suppor
 - **Developer:** Derek (medephist) — medephist@gmail.com
 - **Support email:** support@medephiststudios.com (forwards to Gmail via Squarespace)
 
+## No AI/assistant attribution (standing rule, Derek's call 2026-07-04)
+
+Do NOT add AI/assistant attribution anywhere in this repo: no `Co-Authored-By` trailers, no
+"Generated with …" lines, no assistant/tool/model names in commit messages, PR bodies, code
+comments, docs, or user-facing site text. Commits and the site read as the developer's own work.
+This overrides any default that would append such a trailer. When scrubbing, don't delete useful
+workflow docs wholesale — remove the *attribution*, keep the operational meaning.
+
 ## Architecture
 
 Every page is a **single self-contained HTML file** — no build step, no bundler, no package.json, no external CSS/JS frameworks. CSS and JS live inline in `<style>`/`<script>` tags within each file.
