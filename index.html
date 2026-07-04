@@ -173,7 +173,16 @@
     padding: 5px 14px;
     border-radius: 999px;
   }
-  .chip::before { content: '✓ '; color: var(--gold); font-weight: 700; }
+  .chip::before {
+    content: '';
+    display: inline-block;
+    width: 0.78em; height: 0.78em;
+    margin-right: 6px;
+    vertical-align: -0.05em;
+    background: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2.5'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpolyline%20points%3D'20%206%209%2017%204%2012'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2.5'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpolyline%20points%3D'20%206%209%2017%204%2012'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  }
   .hero-buttons { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
   .btn-primary {
     display: inline-flex;
@@ -415,7 +424,16 @@
     padding: 7px 16px;
     border-radius: 999px;
   }
-  .shield-point::before { content: '🔒 '; font-size: 0.75rem; }
+  .shield-point::before {
+    content: '';
+    display: inline-block;
+    width: 0.9em; height: 0.9em;
+    margin-right: 5px;
+    vertical-align: -0.13em;
+    background: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'3'%20y%3D'11'%20width%3D'18'%20height%3D'11'%20rx%3D'2'%2F%3E%3Cpath%20d%3D'M7%2011V7a5%205%200%200%201%2010%200v4'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'3'%20y%3D'11'%20width%3D'18'%20height%3D'11'%20rx%3D'2'%2F%3E%3Cpath%20d%3D'M7%2011V7a5%205%200%200%201%2010%200v4'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  }
   .btn-shield {
     display: inline-flex;
     align-items: center;
@@ -730,6 +748,14 @@
   @media (min-width: 901px) and (max-width: 1100px) {
     .grid3 { grid-template-columns: repeat(2, 1fr); }
   }
+  /* Line-art icons (emoji replacements) */
+  .i { width: 1.05em; height: 1.05em; flex: none; }
+  .i-lead { vertical-align: -0.16em; margin-right: 0.5em; }
+  .fcard-icon svg { width: 24px; height: 24px; color: var(--gold); }
+  .focus-kicker svg { width: 0.95em; height: 0.95em; vertical-align: -0.15em; margin-right: 0.4em; }
+  .modal-icon svg { width: 27px; height: 27px; color: var(--gold); display: block; }
+  .lightbox-close svg { width: 16px; height: 16px; }
+  .modal-close svg { width: 14px; height: 14px; }
 </style>
 </head>
 <body>
@@ -749,12 +775,12 @@
     </button>
   </header>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="join-beta.html">▶ Join the Beta</a>
+    <a href="join-beta.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>Join the Beta</a>
     <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
     <a href="#privacy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Privacy</a>
-    <a href="contact-support.html">📧 Contact Support</a>
-    <a href="bug-report.html">🐛 Report a Bug</a>
-    <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')">♥ Donate</a>
+    <a href="contact-support.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Contact Support</a>
+    <a href="bug-report.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>Report a Bug</a>
+    <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Donate</a>
     <a href="privacy-policy.html">Privacy Policy</a>
   </div>
 </div>
@@ -772,7 +798,7 @@
         <span class="chip">No paywalls</span>
       </div>
       <div class="hero-buttons">
-        <a href="join-beta.html" class="btn-primary">▶ Join the Beta!</a>
+        <a href="join-beta.html" class="btn-primary"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>Join the Beta!</a>
         <a href="#features" class="link-secondary">See what's inside ↓</a>
       </div>
       <p class="hero-note">Android · Requires a GW2 account · <span class="js-app-version">v0.34.0</span></p>
@@ -797,7 +823,7 @@
 
     <div class="focus-row">
       <div class="focus-text">
-        <span class="focus-kicker">🔔 Exclusive</span>
+        <span class="focus-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Exclusive</span>
         <h3>Real Notifications &amp; Alarms</h3>
         <p class="highlight">The feature no other GW2 app has. Set an alarm for any world boss or event and get a true OS-level push notification with sound — even when the app is closed and your screen is off.</p>
         <p>These aren't in-app countdowns. They're real system alarms that wake your device. Set it before a long farm session and put your phone down — we'll tell you when it's time.</p>
@@ -811,7 +837,7 @@
 
     <div class="focus-row flip">
       <div class="focus-text">
-        <span class="focus-kicker">🧮 Smart Crafting</span>
+        <span class="focus-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>Smart Crafting</span>
         <h3>Pricing Calculator &amp; Crafting Assistant</h3>
         <p class="highlight">Search any craftable item and instantly compare its Trading Post price against the cost to craft it yourself — broken down material by material.</p>
         <p>The Can Craft view shows every item you can make right now from materials you already have. No tab-switching, no manual counting, no spreadsheets.</p>
@@ -835,47 +861,47 @@
     </div>
     <div class="grid3">
       <div class="fcard" data-feature="boss-timers" tabindex="0">
-        <div class="fcard-icon">⏱️</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 13.5"/></svg></div>
         <h3>World Boss Timers</h3>
         <p>Live countdowns for every world boss across all maps. Never miss Tequatl, Triple Trouble, or the Shatterer again.</p>
       </div>
       <div class="fcard" data-feature="legendary" tabindex="0">
-        <div class="fcard-icon">🏆</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
         <h3>Legendary Crafting Tracker</h3>
         <p>Track your legendary progress, see what you still need, and compare make-vs-buy costs with live Trading Post prices.</p>
       </div>
       <div class="fcard" data-feature="trading" tabindex="0">
-        <div class="fcard-icon">💰</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></div>
         <h3>Trading Post</h3>
         <p>Check live item prices, track your listings, and find the best deals without launching the game.</p>
       </div>
       <div class="fcard" data-feature="account" tabindex="0">
-        <div class="fcard-icon">👤</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
         <h3>Account &amp; Characters</h3>
         <p>View your characters, equipment, wallet, currencies, and inventory at a glance. Supports multiple GW2 accounts.</p>
       </div>
       <div class="fcard" data-feature="maps" tabindex="0">
-        <div class="fcard-icon">🗺️</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
         <h3>Interactive Maps</h3>
         <p>Points of interest, waypoints, boss spawn locations, and mastery insights — for every zone in Tyria.</p>
       </div>
       <div class="fcard" data-feature="wvw" tabindex="0">
-        <div class="fcard-icon">⚔️</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="17" x2="4" y2="20"/><line x1="3" y1="19" x2="5" y2="21"/></svg></div>
         <h3>WvW, PvP &amp; Guilds</h3>
         <p>Live WvW objective maps with team ownership and tier badges. PvP stats and leaderboards. Guild roster, storage, and missions.</p>
       </div>
       <div class="fcard" data-feature="daily" tabindex="0">
-        <div class="fcard-icon">📅</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
         <h3>Daily Reset &amp; Wizard's Vault</h3>
         <p>Track your daily and weekly objectives, Wizard's Vault progress, and reset timers — all in one place.</p>
       </div>
       <div class="fcard" data-feature="build-creator" tabindex="0">
-        <div class="fcard-icon">🛠️</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
         <h3>Build Creator</h3>
         <p>Build any profession from scratch with traits, skills, and both land and water skill bars — or paste in a build code from the game.</p>
       </div>
       <div class="fcard" data-feature="achievements" tabindex="0">
-        <div class="fcard-icon">🌟</div>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
         <h3>Achievements</h3>
         <p>Browse and search every achievement in the game, filtered by category, with live progress pulled straight from your account.</p>
       </div>
@@ -910,13 +936,13 @@
       <div class="closing-card" id="support">
         <h2>Need help?</h2>
         <p>Found a bug, have a question, or just want to share feedback? We'd love to hear from you.</p>
-        <a href="contact-support.html" class="btn-outline">📧 Contact Support</a>
-        <a href="bug-report.html" class="btn-outline">🐛 Report a Bug</a>
+        <a href="contact-support.html" class="btn-outline"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Contact Support</a>
+        <a href="bug-report.html" class="btn-outline"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>Report a Bug</a>
       </div>
       <div class="closing-card">
         <h2>Support the project</h2>
         <p>Tyrian Vault is free and always will be. If it's saved you time, a small donation keeps development going.</p>
-        <a href="https://ko-fi.com/medephiststudios" target="_blank" rel="noopener" class="btn-donate">♥ Buy me a coffee</a>
+        <a href="https://ko-fi.com/medephiststudios" target="_blank" rel="noopener" class="btn-donate"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Buy me a coffee</a>
       </div>
     </div>
   </div>
@@ -935,7 +961,7 @@
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
-  <button class="lightbox-close" id="lightboxClose" aria-label="Close">✕</button>
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
   <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous">‹</button>
   <img id="lightboxImg" src="" alt="">
   <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next">›</button>
@@ -944,7 +970,7 @@
 <!-- FEATURE MODAL -->
 <div class="modal-overlay" id="featureModal" role="dialog" aria-modal="true">
   <div class="modal">
-    <button class="modal-close" id="modalClose" aria-label="Close">✕</button>
+    <button class="modal-close" id="modalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
 
     <div class="modal-carousel" id="modalCarousel" style="display:none">
       <img class="modal-carousel-img" id="carouselImg" alt="">
@@ -990,7 +1016,7 @@ function setCarouselSlide(index, animate) {
 
 const FEATURES = {
   'notifications': {
-    icon: '🔔',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
     title: 'Real Notifications & Alarms',
     body: [
       'Real OS-level push notifications with sound — not just in-app alerts. Set an alarm for any world boss and Tyrian Vault will notify you even when the app is closed and your screen is off.',
@@ -999,7 +1025,7 @@ const FEATURES = {
     images: ['screenshots/notifications-1.jpg', 'screenshots/notifications-2.jpg', 'screenshots/notifications-3.jpg']
   },
   'boss-timers': {
-    icon: '⏱️',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 13.5"/></svg>',
     title: 'World Boss Timers',
     body: [
       'Live countdowns for every world boss across all Tyrian maps, auto-synced to the official schedule. See at a glance what\'s coming up next, what\'s active right now, and how long until each boss spawns.',
@@ -1008,7 +1034,7 @@ const FEATURES = {
     images: ['screenshots/boss-timers-1.jpg', 'screenshots/boss-timers-2.jpg']
   },
   'crafting': {
-    icon: '🧮',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>',
     title: 'Pricing Calculator',
     body: [
       'Search any craftable item and instantly compare its Trading Post buy price against the cost to craft it yourself, broken down material by material.',
@@ -1017,7 +1043,7 @@ const FEATURES = {
     images: ['screenshots/crafting-1.jpg', 'screenshots/crafting-2.jpg', 'screenshots/crafting-3.jpg', 'screenshots/crafting-4.jpg']
   },
   'legendary': {
-    icon: '🏆',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
     title: 'Legendary Crafting Tracker',
     body: [
       'The long game, simplified. Track your progress toward any legendary weapon, armor piece, or trinket. See which collections are complete, which are in progress, and exactly what\'s still needed.',
@@ -1026,7 +1052,7 @@ const FEATURES = {
     images: ['screenshots/legendary-1.jpg', 'screenshots/legendary-2.jpg', 'screenshots/legendary-3.jpg']
   },
   'account': {
-    icon: '👤',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
     title: 'Account & Characters',
     body: [
       'A complete snapshot of your GW2 account, always at hand. Browse all your characters, view their equipped gear and build, and check your wallet, currencies, and full inventory.',
@@ -1035,7 +1061,7 @@ const FEATURES = {
     images: ['screenshots/account-1.jpg', 'screenshots/account-2.jpg']
   },
   'maps': {
-    icon: '🗺️',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>',
     title: 'Interactive Maps',
     body: [
       'Every zone in Tyria, fully detailed. Find points of interest, waypoints, hero points, vistas, and mastery insights. Boss spawn locations are clearly marked so you know exactly where to stand when the timer hits zero.',
@@ -1044,7 +1070,7 @@ const FEATURES = {
     images: ['screenshots/maps-1.jpg', 'screenshots/maps-2.jpg']
   },
   'wvw': {
-    icon: '⚔️',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="17" x2="4" y2="20"/><line x1="3" y1="19" x2="5" y2="21"/></svg>',
     title: 'WvW, PvP & Guilds',
     body: [
       'Live World vs. World objective maps showing current team ownership for every keep, tower, and camp — complete with tier and matchup info, updated in real time.',
@@ -1053,7 +1079,7 @@ const FEATURES = {
     images: ['screenshots/wvw-1.jpg', 'screenshots/wvw-2.jpg', 'screenshots/wvw-3.jpg']
   },
   'daily': {
-    icon: '📅',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
     title: 'Daily Reset & Wizard\'s Vault',
     body: [
       'Stay on top of your daily routine without effort. See all daily and weekly objectives, your current Wizard\'s Vault astral acclaim balance, and which objectives you\'ve completed.',
@@ -1062,7 +1088,7 @@ const FEATURES = {
     images: ['screenshots/daily-1.jpg', 'screenshots/daily-2.jpg']
   },
   'trading': {
-    icon: '💰',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>',
     title: 'Trading Post',
     body: [
       'The full GW2 Trading Post in your pocket. Search any item for live buy and sell prices, check your active listings and transaction history, and spot deals — all without launching the game.',
@@ -1071,7 +1097,7 @@ const FEATURES = {
     images: ['screenshots/trading-1.jpg', 'screenshots/trading-2.jpg']
   },
   'build-creator': {
-    icon: '🛠️',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
     title: 'Build Creator',
     body: [
       'Create a build for any profession from the ground up. Pick your specializations, traits, and skills, with a Land / Water toggle so both skill bars are covered.',
@@ -1080,7 +1106,7 @@ const FEATURES = {
     images: ['screenshots/build-creator-1.jpg', 'screenshots/build-creator-2.jpg']
   },
   'achievements': {
-    icon: '🌟',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
     title: 'Achievements',
     body: [
       'Every achievement in the game, synced live from your account. See your total achievement points broken down by permanent, daily, and monthly, and filter or search by category to find exactly what you\'re chasing.',
@@ -1094,7 +1120,7 @@ function openFeatureModal(key) {
   var f = FEATURES[key];
   if (!f) return;
 
-  document.getElementById('modalIcon').textContent = f.icon;
+  document.getElementById('modalIcon').innerHTML = f.icon;
   document.getElementById('modalTitle').textContent = f.title;
 
   var bodyEl = document.getElementById('modalBody');

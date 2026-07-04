@@ -19,6 +19,14 @@ comments, docs, or user-facing site text. Commits and the site read as the devel
 This overrides any default that would append such a trailer. When scrubbing, don't delete useful
 workflow docs wholesale — remove the *attribution*, keep the operational meaning.
 
+## No emoji — draw line-art icons instead (standing rule, Derek's call 2026-07-04)
+
+Don't use emoji in the site's markup, CSS, or content. When something calls for an emoji/icon, use
+a line-art icon instead: an inline stroke SVG (`viewBox="0 0 24 24"`, `fill="none"`,
+`stroke="currentColor"`, `stroke-width="2"`, round caps/joins) drawn to match the app's monotone
+line-glyph style (`C:\dev\GW2VaultExpo\src\menuIcons.js` / `assets/icons/`). Always show the user a
+before/after mockup and get approval **before** applying. This mirrors the app's matching rule.
+
 ## Architecture
 
 Every page is a **single self-contained HTML file** — no build step, no bundler, no package.json, no external CSS/JS frameworks. CSS and JS live inline in `<style>`/`<script>` tags within each file.
