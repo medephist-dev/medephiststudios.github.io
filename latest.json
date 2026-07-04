@@ -1,5 +1,5 @@
 {
-  "version": "0.34.1",
+  "version": "0.34.2",
   "url": "https://medephiststudios.com/join-beta.html",
-  "notes": "Exact-alarm permission now meets Google Play's compliance requirements, plus behind-the-scenes housekeeping. Tyrian Vault is now in closed beta — join at medephiststudios.com/join-beta.html."
+  "notes": "Long inventory scans (Can Craft, Bags, and the material \"have vs. need\" check) now show a \"still working\" note if a scan stalls on a large account, so a slow scan no longer looks stuck. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
 }
