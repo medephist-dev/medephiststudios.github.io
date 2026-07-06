@@ -1223,6 +1223,12 @@ document.querySelectorAll('.fcard[data-feature]').forEach(function(card) {
   });
 });
 
+// Deep link: ?feature=<key> opens that feature's popup on load (e.g. the in-app update card links here)
+(function() {
+  var key = new URLSearchParams(window.location.search).get('feature');
+  if (key && FEATURES[key]) openFeatureModal(key);
+})();
+
 document.getElementById('featureModal').addEventListener('click', function(e) {
   if (e.target === this) closeFeatureModal();
 });
