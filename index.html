@@ -336,6 +336,7 @@
     margin-top: 56px;
   }
   .fcard {
+    position: relative;
     background: rgba(30,30,42,0.55);
     border: 1px solid transparent;
     border-radius: 12px;
@@ -372,6 +373,32 @@
     transition: opacity 0.2s;
   }
   .fcard[data-feature]:hover::after { opacity: 1; }
+  /* reusable "new feature" badge */
+  .fcard.is-new { border-color: rgba(200,168,75,0.28); }
+  .fcard-badge {
+    position: absolute;
+    top: 14px; right: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.35);
+    color: var(--gold-light);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    line-height: 1;
+  }
+  .fcard-badge::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
 
   /* PRIVACY SHIELD */
   .privacy-section { padding: 110px 40px; }
@@ -860,6 +887,12 @@
       <div class="divider"></div>
     </div>
     <div class="grid3">
+      <div class="fcard is-new" data-feature="landscape" tabindex="0">
+        <span class="fcard-badge">Added 7/6/26</span>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><line x1="17" y1="7" x2="17" y2="17"/></svg></div>
+        <h3>Landscape Mode</h3>
+        <p>Rotate your phone and the whole app follows — wider maps, a two-column dashboard, and a nav bar that highlights where you are.</p>
+      </div>
       <div class="fcard" data-feature="boss-timers" tabindex="0">
         <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 13.5"/></svg></div>
         <h3>World Boss Timers</h3>
@@ -1015,6 +1048,15 @@ function setCarouselSlide(index, animate) {
 }
 
 const FEATURES = {
+  'landscape': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><line x1="17" y1="7" x2="17" y2="17"/></svg>',
+    title: 'Landscape Mode',
+    body: [
+      'Turn on Rotate to Landscape in Settings and the whole app follows your phone. Pages drop the title bar to give you more room, the Overview splits into a two-column dashboard, and Maps switches to a compact control bar so more of Tyria stays on screen.',
+      'The bottom navigation highlights the page you\'re on, so you always know where you are — everything stays exactly where you expect, just wider.'
+    ],
+    images: ['screenshots/landscape-1.jpg', 'screenshots/landscape-2.jpg', 'screenshots/landscape-3.jpg']
+  },
   'notifications': {
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
     title: 'Real Notifications & Alarms',
