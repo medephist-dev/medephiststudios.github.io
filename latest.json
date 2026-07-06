@@ -1,5 +1,5 @@
 {
-  "version": "0.34.4",
+  "version": "0.34.5",
   "url": "https://medephiststudios.com/join-beta.html",
-  "notes": "The manual refresh button now shows on every account page when \"Show refresh button\" is on (Settings ▸ Live data refresh) — before, most pages had no way to refresh short of reopening the app. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
+  "notes": "New optional landscape mode — turn on \"Rotate to landscape\" in Settings ▸ General ▸ Appearance to use the app sideways. Also fixes popups that could slip under the navigation bar or off the screen edge. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
 }
