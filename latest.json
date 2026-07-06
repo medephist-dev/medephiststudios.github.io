@@ -1,5 +1,5 @@
 {
-  "version": "0.34.3",
+  "version": "0.34.4",
   "url": "https://medephiststudios.com/join-beta.html",
-  "notes": "Settings tidy-up and a couple of fixes: page-refresh options moved to General ▸ Startup (next to \"Clear every page on leave\"), the \"Pages to refresh\" Done button no longer hides under the navigation bar, and Bosses & Events now credits its images to © ArenaNet, via the Guild Wars 2 Wiki. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
+  "notes": "The manual refresh button now shows on every account page when \"Show refresh button\" is on (Settings ▸ Live data refresh) — before, most pages had no way to refresh short of reopening the app. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
 }
