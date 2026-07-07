@@ -1,5 +1,5 @@
 {
-  "version": "0.34.5",
-  "url": "https://medephiststudios.com/?feature=landscape",
-  "notes": "New optional landscape mode — turn on \"Rotate to landscape\" in Settings ▸ General ▸ Appearance to use the app sideways. Also fixes popups that could slip under the navigation bar or off the screen edge. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
+  "version": "0.34.6",
+  "url": "https://medephiststudios.com/join-beta.html",
+  "notes": "Portrait pages now hide the title bar for more room, class icons load instantly (cached on your device), and Settings has been reorganized and simplified. Also centers the Skins grid and the Overview's Gold/Gems/Astral Acclaim, and adds a one-tap collapse for the Skins filters in landscape. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
 }
