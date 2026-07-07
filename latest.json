@@ -1,5 +1,5 @@
 {
-  "version": "0.34.6",
+  "version": "0.35.1",
   "url": "https://medephiststudios.com/join-beta.html",
-  "notes": "Portrait pages now hide the title bar for more room, class icons load instantly (cached on your device), and Settings has been reorganized and simplified. Also centers the Skins grid and the Overview's Gold/Gems/Astral Acclaim, and adds a one-tap collapse for the Skins filters in landscape. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
+  "notes": "Tyrian Vault can now update itself through Google Play — new versions download in the background and prompt you to restart. Navigation is snappier and lighter on the battery in the background, Guild Wars 2 API hiccups now show a clean message instead of raw error text, and new installs default to local time and a 12-hour clock. Tyrian Vault is in closed beta — join at medephiststudios.com/join-beta.html."
 }
