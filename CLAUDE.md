@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-This is the GitHub Pages site for **medephiststudios.com**, the marketing/support site for **Tyrian Vault** (a free, unofficial Guild Wars 2 companion app for Android).
+This is the GitHub Pages site for **medephiststudios.com** — the studio site for **Medephist Studios**, an independent app developer. The homepage is a developer/portfolio page listing every released app; each app gets its own landing page. The first app is **Tyrian Vault** (a free, unofficial Guild Wars 2 companion app for Android) at `tyrian-vault.html`.
 
 - **Repo:** `https://github.com/medephist-dev/medephiststudios.github.io`
 - **Live site:** `https://medephiststudios.com` (custom domain via `CNAME`)
@@ -33,12 +33,17 @@ Every page is a **single self-contained HTML file** — no build step, no bundle
 
 | File | Purpose |
 |---|---|
-| `index.html` | Main landing page — hero, screenshot gallery (lightbox), feature modals (carousel), support, donate sections |
-| `bug-report.html` | Bug report form, submits directly via Web3Forms (see below) |
-| `contact-support.html` | General support contact form, also via Web3Forms |
-| `privacy-policy.html` | Static privacy policy page |
-| `screenshots/` | JPGs used in the index.html gallery and feature modals, named `<feature>-<n>.jpg` |
-| `app-icon.png` | App icon used in the hero section |
+| `index.html` | **Studio homepage** — hero, apps showcase grid (one card per released app + "next project" placeholder with an HTML-comment template for adding apps), about-the-studio, support/donate, footer |
+| `tyrian-vault.html` | Tyrian Vault app landing page — hero, screenshot gallery (lightbox), feature modals (carousel), support, donate sections (formerly the site's `index.html`) |
+| `bug-report.html` | Bug report form, submits directly via Web3Forms (see below); back-links to `tyrian-vault.html` |
+| `contact-support.html` | General support contact form, also via Web3Forms; back-links to `index.html` (studio-wide) |
+| `join-beta.html` | Tyrian Vault beta signup; back-links to `tyrian-vault.html` |
+| `privacy-policy.html` | Static privacy policy page (Tyrian Vault–specific); back-links to `tyrian-vault.html` |
+| `screenshots/` | JPGs used in the Tyrian Vault gallery and feature modals, named `<feature>-<n>.jpg` |
+| `app-icon.png` | Tyrian Vault app icon, used on both the studio homepage cards and the app page hero |
+| `latest.json` | Current app version + release notes; fetched client-side to fill `.js-app-version` spans (use a **relative** `latest.json` path so forge previews under a subpath work) |
+
+**Adding a new app:** copy the commented template card in `index.html`'s apps grid, create a new `<app>.html` landing page (clone the tyrian-vault.html structure/design system), and add its icon PNG.
 
 **Form submission pattern:** `bug-report.html` and `contact-support.html` both `fetch()`-POST a JSON payload directly to `https://api.web3forms.com/submit` (no backend, no mailto fallback). Each includes a public Web3Forms `access_key`, a `subject` line, and a `replyto` field sourced from the user's optional email input so Web3Forms can auto-reply. When adding a new form, follow this same pattern rather than introducing mailto links or a different submission service.
 
@@ -50,11 +55,11 @@ Reuse these values for consistency when touching any page:
 - Dark backgrounds: `#0e0e12` / `#16161e` / `#1e1e2a`
 - Text: `#d4cfc4` / muted `#8a8578`
 - Accent (donate button): `#7b4fa6`
-- Font: `Segoe UI`, system-ui
+- Headings: `Plus Jakarta Sans`; body: `Inter` (Google Fonts), fallback `Segoe UI`, system-ui
 
 ## App version
 
-The app version string shown in `index.html`'s footer disclaimer (e.g. `Tyrian Vault v0.20.2`) should be bumped whenever a new app version is referenced — it's the only place version info lives on this site.
+The Tyrian Vault version shown in `tyrian-vault.html` (hero note + footer disclaimer) and on the `index.html` app card is populated client-side from `latest.json`; the hardcoded fallback text should be bumped when releasing so no-JS visitors see the right version.
 
 ## Local development
 
@@ -64,17 +69,13 @@ No build/install step. Preview by serving the static files, e.g.:
 python -m http.server 8765
 ```
 
-or
-
-```bash
-npx serve -l 8765
-```
-
 Then open `http://localhost:8765`.
+
+On forge, `site-build medephiststudios` publishes a tailnet-only preview at `http://100.110.68.90:8080/sites/`.
 
 ## Related project
 
-This repo is the marketing/support site only. The Tyrian Vault app itself (Expo/React Native) lives at `C:\dev\GW2VaultExpo`, a separate repo with its own `CLAUDE.md`. Don't look for app source code here.
+This repo is the studio/marketing site only. The Tyrian Vault app itself (Expo/React Native) lives at `C:\dev\GW2VaultExpo` (source working copy on forge at `~/work`), a separate repo with its own `CLAUDE.md`. Don't look for app source code here.
 
 ## Infrastructure
 
@@ -83,9 +84,9 @@ This repo is the marketing/support site only. The Tyrian Vault app itself (Expo/
 
 ## Open to-dos
 
-- **Add Google Play Store link** to the hero "Get it on Google Play" button (`index.html`, currently `href="#"`) once the app is published — it's still in beta.
+- **Add Google Play Store link** to the Tyrian Vault hero "Get it on Google Play" button (`tyrian-vault.html`, currently `href="#"`) once the app is published — it's still in beta.
 - **GitHub issue triage agent** — set up a scheduled cloud agent to check `medephist-dev/TyrianVault` Issues for new `[BUG]` entries and analyze them. Undecided: comment on issues directly vs. send a summary report vs. both; daily vs. hourly frequency; whether the repo is public or private.
-- **5 pending homepage cards** (Build Creator, Achievements, Masteries, Skins/Wardrobe, Wallet + Gem Exchange) — waiting on screenshots from the app before wiring into the `FEATURES` object and screenshot gallery in `index.html`.
+- **5 pending Tyrian Vault cards** (Build Creator, Achievements, Masteries, Skins/Wardrobe, Wallet + Gem Exchange) — waiting on screenshots from the app before wiring into the `FEATURES` object and screenshot gallery in `tyrian-vault.html`.
 
 ## Deploying
 

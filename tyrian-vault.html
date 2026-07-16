@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tyrian Vault — GW2 Companion App | Medephist Studios</title>
+<meta name="description" content="Tyrian Vault is a free GW2 companion for Android with real push notifications for boss timers — the feature no other GW2 app has. Plus crafting, WvW, maps, and more.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold: #c8a84b;
+    --gold-light: #e8c96a;
+    --gold-dim: rgba(200,168,75,0.12);
+    --dark: #0e0e12;
+    --dark2: #16161e;
+    --dark3: #1e1e2a;
+    --text: #d4cfc4;
+    --muted: #8a8578;
+    --accent: #7b4fa6;
+    --border: #2a2a38;
+    --heading: 'Plus Jakarta Sans', 'Segoe UI', system-ui, sans-serif;
+    --body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  }
+
+  body {
+    font-family: var(--body);
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.65;
+    font-size: 16px;
+  }
+
+  h1, h2, h3 { font-family: var(--heading); }
+  a { color: var(--gold); text-decoration: none; }
+  a:hover { color: var(--gold-light); }
+
+  /* HEADER */
+  .site-top {
+    position: sticky;
+    top: 0;
+    z-index: 500;
+  }
+  header {
+    background: rgba(14,14,18,0.82);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .logo { font-family: var(--heading); font-size: 1.05rem; font-weight: 800; color: var(--gold); letter-spacing: 0.4px; }
+  .logo span { color: var(--muted); font-weight: 500; }
+  nav a { color: var(--muted); font-size: 0.88rem; font-weight: 500; margin-left: 28px; transition: color 0.2s; }
+  nav a:hover { color: var(--gold); }
+  nav .nav-cta {
+    border: 1px solid rgba(200,168,75,0.45);
+    color: var(--gold);
+    padding: 7px 16px;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  nav .nav-cta:hover { background: var(--gold); color: var(--dark); }
+
+  /* HAMBURGER + MOBILE MENU */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: var(--dark3);
+    border-bottom: 1px solid var(--border);
+    padding: 8px 0;
+  }
+  .mobile-menu a {
+    display: block;
+    padding: 12px 24px;
+    color: var(--text);
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu a:last-child { border-bottom: none; }
+  .mobile-menu a:hover { color: var(--gold); background: var(--dark2); }
+  .mobile-menu.open { display: flex; }
+
+  /* HERO — asymmetric 60/40 */
+  .hero {
+    position: relative;
+    border-bottom: 1px solid var(--border);
+    background:
+      radial-gradient(ellipse 900px 480px at 18% -10%, rgba(200,168,75,0.08), transparent 60%),
+      linear-gradient(180deg, var(--dark2) 0%, var(--dark) 100%);
+    overflow: hidden;
+  }
+  .hero-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 96px 40px 88px;
+    display: grid;
+    grid-template-columns: 60fr 40fr;
+    gap: 56px;
+    align-items: center;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.35);
+    color: var(--gold-light);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 26px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
+  .hero h1 {
+    font-size: clamp(2.4rem, 5vw, 3.6rem);
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.08;
+    letter-spacing: -1.2px;
+    margin-bottom: 18px;
+  }
+  .hero h1 .grad {
+    background: linear-gradient(100deg, var(--gold) 20%, var(--gold-light) 60%, #f4e0a0 90%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero .tagline {
+    font-size: 1.12rem;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 26px;
+  }
+  .hero-chips { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 34px; }
+  .chip {
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    padding: 5px 14px;
+    border-radius: 999px;
+  }
+  .chip::before {
+    content: '';
+    display: inline-block;
+    width: 0.78em; height: 0.78em;
+    margin-right: 6px;
+    vertical-align: -0.05em;
+    background: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2.5'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpolyline%20points%3D'20%206%209%2017%204%2012'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2.5'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Cpolyline%20points%3D'20%206%209%2017%204%2012'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  }
+  .hero-buttons { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 16px; }
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: linear-gradient(120deg, var(--gold), var(--gold-light));
+    color: var(--dark);
+    font-family: var(--heading);
+    font-weight: 800;
+    font-size: 1rem;
+    padding: 15px 32px;
+    border-radius: 10px;
+    box-shadow: 0 8px 28px rgba(200,168,75,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(200,168,75,0.35); color: var(--dark); }
+  .link-secondary {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--muted);
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .link-secondary:hover { color: var(--gold); border-color: var(--gold); }
+  .hero-note { font-size: 0.8rem; color: #5e5a4f; }
+
+  /* PHONE MOCKUP */
+  .hero-visual { display: flex; justify-content: center; }
+  .phone {
+    position: relative;
+    width: 272px;
+    border-radius: 38px;
+    padding: 12px;
+    background: linear-gradient(160deg, #23232f, #101017);
+    border: 1px solid #343444;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.6),
+      0 40px 90px rgba(0,0,0,0.7),
+      0 0 80px rgba(200,168,75,0.07);
+    transform: rotate(2.5deg);
+  }
+  .phone::before {
+    content: '';
+    position: absolute;
+    top: 22px; left: 50%;
+    transform: translateX(-50%);
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #06060a;
+    border: 1px solid #2c2c3a;
+    z-index: 2;
+  }
+  .phone img {
+    display: block;
+    width: 100%;
+    border-radius: 28px;
+  }
+
+  /* SECTION SCAFFOLD */
+  section { padding: 96px 40px; }
+  .section-inner { max-width: 1160px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.6px;
+    margin-bottom: 14px;
+  }
+  .section-sub { color: var(--muted); max-width: 560px; margin-bottom: 0; }
+  .center { text-align: center; }
+  .center .section-sub { margin-left: auto; margin-right: auto; }
+  .divider {
+    width: 64px;
+    height: 1px;
+    margin: 22px auto 0;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  /* FEATURE FOCUS ROWS */
+  .focus-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+    margin-top: 72px;
+  }
+  .focus-row.flip .focus-text { order: 2; }
+  .focus-row.flip .focus-media { order: 1; }
+  .focus-kicker {
+    display: inline-block;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid rgba(200,168,75,0.3);
+    background: var(--gold-dim);
+    padding: 4px 12px;
+    border-radius: 6px;
+    margin-bottom: 18px;
+  }
+  .focus-text h3 {
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+  .focus-text p { color: var(--muted); font-size: 0.98rem; margin-bottom: 12px; }
+  .focus-text .highlight { color: var(--text); }
+  .focus-more {
+    display: inline-block;
+    margin-top: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold);
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--body);
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+  .focus-more:hover { opacity: 1; }
+  .focus-media { display: flex; justify-content: center; gap: 20px; }
+  .focus-media img {
+    width: min(46%, 210px);
+    border-radius: 20px;
+    border: 1px solid #333342;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    cursor: pointer;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  .focus-media img:hover { transform: translateY(-6px); border-color: rgba(200,168,75,0.5); }
+  .focus-media img:nth-child(2) { margin-top: 36px; }
+
+  /* 3-COLUMN FEATURE GRID */
+  .features-grid-section { background: var(--dark2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .grid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 56px;
+  }
+  .fcard {
+    position: relative;
+    background: rgba(30,30,42,0.55);
+    border: 1px solid transparent;
+    border-radius: 12px;
+    padding: 34px 30px;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+  .fcard:hover {
+    transform: translateY(-4px);
+    border-color: rgba(200,168,75,0.4);
+    background: rgba(34,34,48,0.85);
+  }
+  .fcard-icon {
+    width: 44px; height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.35rem;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.25);
+    border-radius: 10px;
+    margin-bottom: 18px;
+  }
+  .fcard h3 { font-size: 1.02rem; font-weight: 700; color: #fff; margin-bottom: 8px; letter-spacing: -0.2px; }
+  .fcard p { font-size: 0.88rem; color: var(--muted); }
+  .fcard[data-feature] { cursor: pointer; }
+  .fcard[data-feature]::after {
+    content: 'Learn more →';
+    display: block;
+    margin-top: 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--gold);
+    opacity: 0.55;
+    transition: opacity 0.2s;
+  }
+  .fcard[data-feature]:hover::after { opacity: 1; }
+  /* reusable "new feature" badge */
+  .fcard.is-new { border-color: rgba(200,168,75,0.28); }
+  .fcard-badge {
+    position: absolute;
+    top: 14px; right: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gold-dim);
+    border: 1px solid rgba(200,168,75,0.35);
+    color: var(--gold-light);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    line-height: 1;
+  }
+  .fcard-badge::before {
+    content: '';
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+    box-shadow: 0 0 8px var(--gold);
+  }
+
+  /* PRIVACY SHIELD */
+  .privacy-section { padding: 110px 40px; }
+  .shield-box {
+    position: relative;
+    max-width: 880px;
+    margin: 0 auto;
+    text-align: center;
+    background:
+      radial-gradient(ellipse 500px 260px at 50% 0%, rgba(200,168,75,0.09), transparent 70%),
+      var(--dark2);
+    border: 1px solid rgba(200,168,75,0.28);
+    border-radius: 20px;
+    padding: 64px 48px 56px;
+    box-shadow: 0 0 60px rgba(200,168,75,0.05), 0 32px 80px rgba(0,0,0,0.5);
+  }
+  .shield-icon {
+    width: 58px; height: 58px;
+    margin: 0 auto 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(160deg, rgba(200,168,75,0.18), rgba(200,168,75,0.04));
+    border: 1px solid rgba(200,168,75,0.4);
+    border-radius: 16px;
+  }
+  .shield-icon svg { width: 28px; height: 28px; stroke: var(--gold-light); }
+  .shield-box h2 {
+    font-family: var(--heading);
+    font-size: 1.7rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.5px;
+    margin-bottom: 14px;
+  }
+  .shield-box > p { color: var(--muted); max-width: 600px; margin: 0 auto 30px; font-size: 0.98rem; }
+  .shield-points {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 34px;
+  }
+  .shield-point {
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: var(--text);
+    background: var(--dark3);
+    border: 1px solid var(--border);
+    padding: 7px 16px;
+    border-radius: 999px;
+  }
+  .shield-point::before {
+    content: '';
+    display: inline-block;
+    width: 0.9em; height: 0.9em;
+    margin-right: 5px;
+    vertical-align: -0.13em;
+    background: var(--gold);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'3'%20y%3D'11'%20width%3D'18'%20height%3D'11'%20rx%3D'2'%2F%3E%3Cpath%20d%3D'M7%2011V7a5%205%200%200%201%2010%200v4'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2024%2024'%20fill%3D'none'%20stroke%3D'black'%20stroke-width%3D'2'%20stroke-linecap%3D'round'%20stroke-linejoin%3D'round'%3E%3Crect%20x%3D'3'%20y%3D'11'%20width%3D'18'%20height%3D'11'%20rx%3D'2'%2F%3E%3Cpath%20d%3D'M7%2011V7a5%205%200%200%201%2010%200v4'%2F%3E%3C%2Fsvg%3E") center / contain no-repeat;
+  }
+  .btn-shield {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--dark);
+    border: 1px solid rgba(200,168,75,0.5);
+    color: var(--gold-light);
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 13px 28px;
+    border-radius: 10px;
+    transition: all 0.25s ease;
+  }
+  .btn-shield:hover { background: var(--gold); color: var(--dark); box-shadow: 0 8px 28px rgba(200,168,75,0.3); }
+
+  /* SUPPORT + DONATE */
+  .closing { background: var(--dark2); border-top: 1px solid var(--border); }
+  .closing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .closing-card {
+    background: rgba(30,30,42,0.55);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 44px 40px;
+    transition: border-color 0.25s ease, transform 0.25s ease;
+  }
+  .closing-card:hover { border-color: rgba(200,168,75,0.35); transform: translateY(-3px); }
+  .closing-card h2 { font-family: var(--heading); font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 10px; letter-spacing: -0.3px; }
+  .closing-card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 24px; }
+  .btn-outline {
+    display: inline-block;
+    border: 1px solid #3a3a4a;
+    background: var(--dark3);
+    color: var(--text);
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 11px 22px;
+    border-radius: 9px;
+    margin-right: 10px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-donate {
+    display: inline-block;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--heading);
+    font-weight: 700;
+    font-size: 0.95rem;
+    padding: 12px 28px;
+    border-radius: 9px;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .btn-donate:hover { opacity: 0.88; transform: translateY(-2px); color: #fff; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    text-align: center;
+    padding: 40px 24px;
+    font-size: 0.8rem;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); margin: 0 10px; }
+  footer a:hover { color: var(--gold); }
+  footer .disclaimer { margin: 14px auto 0; font-size: 0.74rem; color: #555; max-width: 620px; }
+  footer .copyright { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--border); font-size: 0.74rem; color: #555; }
+
+  /* FEATURE MODAL */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.88);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--dark2);
+    border: 1px solid rgba(200,168,75,0.12);
+    border-radius: 28px;
+    max-width: 460px;
+    width: 100%;
+    max-height: 92vh;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    animation: modalIn 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 0 0 1px rgba(200,168,75,0.06), 0 48px 120px rgba(0,0,0,0.95);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(36px) scale(0.91); }
+    to   { opacity: 1; transform: translateY(0)    scale(1);    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 14px; right: 14px;
+    z-index: 20;
+    background: rgba(10,10,15,0.65);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.6);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.78rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .modal-close:hover { background: rgba(200,168,75,0.18); color: var(--gold); border-color: rgba(200,168,75,0.35); }
+
+  /* CAROUSEL */
+  .modal-carousel {
+    position: relative;
+    background: #07070d;
+    flex-shrink: 0;
+    border-radius: 28px 28px 0 0;
+    overflow: hidden;
+    user-select: none;
+  }
+  .modal-carousel-img {
+    width: 100%;
+    height: 360px;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.22s ease;
+    cursor: zoom-in;
+  }
+  .modal-carousel-img.fading { opacity: 0; }
+
+  /* LIGHTBOX */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.96);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    touch-action: pinch-zoom;
+    cursor: default;
+    border-radius: 4px;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 16px; right: 16px;
+    background: rgba(10,10,15,0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    z-index: 1;
+  }
+  .lightbox-close:hover { background: rgba(200,168,75,0.2); color: var(--gold); }
+  .lightbox-arrow {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: rgba(10,10,15,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.6rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+    z-index: 1;
+  }
+  .lightbox-arrow:hover { background: rgba(200,168,75,0.2); color: var(--gold); border-color: rgba(200,168,75,0.4); }
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+  @media (max-width: 600px) { .lightbox-arrow { display: none; } }
+
+  .modal-carousel::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--dark2));
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .carousel-arrow {
+    position: absolute;
+    top: 44%;
+    transform: translateY(-50%);
+    background: rgba(10,10,15,0.5);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.75);
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.3rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, border-color 0.2s, color 0.2s;
+    z-index: 2;
+  }
+  .carousel-arrow:hover { background: rgba(200,168,75,0.18); border-color: rgba(200,168,75,0.4); color: var(--gold); }
+  .carousel-prev { left: 14px; }
+  .carousel-next { right: 14px; }
+
+  .carousel-dots {
+    position: absolute;
+    bottom: 14px; left: 0; right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    z-index: 2;
+  }
+  .carousel-dot {
+    height: 6px;
+    width: 6px;
+    border-radius: 3px;
+    background: rgba(255,255,255,0.3);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: width 0.3s ease, background 0.3s ease, border-radius 0.3s ease;
+  }
+  .carousel-dot.active { width: 20px; background: var(--gold); border-radius: 3px; }
+
+  /* MODAL CONTENT */
+  .modal-content {
+    padding: 20px 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 14px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+  .modal-icon { font-size: 1.9rem; line-height: 1; flex-shrink: 0; }
+  .modal-title { font-family: var(--heading); font-size: 1.1rem; font-weight: 700; color: #fff; line-height: 1.3; margin: 0; }
+  .modal-body p {
+    color: #9e9990;
+    font-size: 0.9rem;
+    line-height: 1.75;
+    margin-bottom: 12px;
+  }
+  .modal-body p:last-child { margin-bottom: 0; }
+
+  @media (max-width: 600px) {
+    .modal-overlay { padding: 0; align-items: flex-end; }
+    .modal { border-radius: 24px 24px 0 0; max-width: 100%; max-height: 90vh; }
+    .modal-carousel { border-radius: 24px 24px 0 0; }
+    .modal-carousel-img { height: 280px; }
+    .modal-content { padding: 16px 20px 32px; }
+    .carousel-arrow { display: none; }
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    header { padding: 14px 20px; }
+    nav { display: none; }
+    .hamburger { display: flex; }
+    section, .privacy-section { padding: 64px 20px; }
+    .hero-inner { grid-template-columns: 1fr; padding: 64px 20px; gap: 48px; text-align: center; }
+    .hero .tagline { margin-left: auto; margin-right: auto; }
+    .hero-chips, .hero-buttons { justify-content: center; }
+    .phone { transform: rotate(0deg); width: 240px; }
+    .focus-row { grid-template-columns: 1fr; gap: 40px; margin-top: 56px; }
+    .focus-row.flip .focus-text { order: 1; }
+    .focus-row.flip .focus-media { order: 2; }
+    .grid3 { grid-template-columns: 1fr; gap: 16px; margin-top: 40px; }
+    .closing-grid { grid-template-columns: 1fr; }
+    .shield-box { padding: 44px 24px; }
+  }
+  @media (min-width: 901px) and (max-width: 1100px) {
+    .grid3 { grid-template-columns: repeat(2, 1fr); }
+  }
+  /* Line-art icons (emoji replacements) */
+  .i { width: 1.05em; height: 1.05em; flex: none; }
+  .i-lead { vertical-align: -0.16em; margin-right: 0.5em; }
+  .fcard-icon svg { width: 24px; height: 24px; color: var(--gold); }
+  .focus-kicker svg { width: 0.95em; height: 0.95em; vertical-align: -0.15em; margin-right: 0.4em; }
+  .modal-icon svg { width: 27px; height: 27px; color: var(--gold); display: block; }
+  .lightbox-close svg { width: 16px; height: 16px; }
+  .modal-close svg { width: 14px; height: 14px; }
+</style>
+</head>
+<body>
+
+<div class="site-top">
+  <header>
+    <a class="logo" href="index.html">Medephist<span> Studios</span></a>
+    <nav>
+      <a href="index.html">All Apps</a>
+      <a href="#features">Features</a>
+      <a href="#privacy">Privacy</a>
+      <a href="contact-support.html">Support</a>
+      <a href="bug-report.html">Report a Bug</a>
+      <a href="join-beta.html" class="nav-cta">Join the Beta</a>
+    </nav>
+    <button class="hamburger" aria-label="Menu" onclick="document.getElementById('mobileMenu').classList.toggle('open')">
+      <span></span><span></span><span></span>
+    </button>
+  </header>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>All Apps</a>
+    <a href="join-beta.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>Join the Beta</a>
+    <a href="#features" onclick="document.getElementById('mobileMenu').classList.remove('open')">Features</a>
+    <a href="#privacy" onclick="document.getElementById('mobileMenu').classList.remove('open')">Privacy</a>
+    <a href="contact-support.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Contact Support</a>
+    <a href="bug-report.html"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>Report a Bug</a>
+    <a href="#donate" onclick="document.getElementById('mobileMenu').classList.remove('open')"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Donate</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <div class="hero-badge">Free Android App · Now in Closed Beta</div>
+      <h1>Your Guild Wars&nbsp;2 command center, <span class="grad">in your pocket.</span></h1>
+      <p class="tagline">Tyrian Vault is the unofficial GW2 companion built by a player, for players — with the one feature no other app has: real push-notification alarms.</p>
+      <div class="hero-chips">
+        <span class="chip">Free forever</span>
+        <span class="chip">No ads</span>
+        <span class="chip">No paywalls</span>
+      </div>
+      <div class="hero-buttons">
+        <a href="join-beta.html" class="btn-primary"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 3 20 12 6 21 6 3"/></svg>Join the Beta!</a>
+        <a href="#features" class="link-secondary">See what's inside ↓</a>
+      </div>
+      <p class="hero-note">Android · Requires a GW2 account · <span class="js-app-version">v0.34.0</span></p>
+    </div>
+    <div class="hero-visual">
+      <div class="phone">
+        <img src="screenshots/notifications-1.jpg" alt="Tyrian Vault running on Android — world boss notification alarm">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE FOCUS ROWS -->
+<section id="features">
+  <div class="section-inner">
+    <div class="center">
+      <p class="section-label">Signature Features</p>
+      <h2 class="section-title">Built around the things other apps can't do</h2>
+      <p class="section-sub">Two heavyweight features anchor Tyrian Vault. Everything else orbits around them.</p>
+      <div class="divider"></div>
+    </div>
+
+    <div class="focus-row">
+      <div class="focus-text">
+        <span class="focus-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>Exclusive</span>
+        <h3>Real Notifications &amp; Alarms</h3>
+        <p class="highlight">Set an alarm for any world boss or event and get a true OS-level push notification with sound — even when the app is closed and your screen is off.</p>
+        <p>These aren't in-app countdowns. They're real system alarms that wake your device. Set it before a long farm session and put your phone down — we'll tell you when it's time.</p>
+        <button class="focus-more" onclick="openFeatureModal('notifications')">Learn more →</button>
+      </div>
+      <div class="focus-media">
+        <img src="screenshots/notifications-2.jpg" alt="Notification alarm setup screen" loading="lazy" onclick="openFeatureModal('notifications')">
+        <img src="screenshots/notifications-3.jpg" alt="Push notification on lock screen" loading="lazy" onclick="openFeatureModal('notifications')">
+      </div>
+    </div>
+
+    <div class="focus-row flip">
+      <div class="focus-text">
+        <span class="focus-kicker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>Smart Crafting</span>
+        <h3>Pricing Calculator &amp; Crafting Assistant</h3>
+        <p class="highlight">Search any craftable item and compare its Trading Post price against the cost to craft it yourself — broken down material by material.</p>
+        <p>The Can Craft view shows every item you can make right now from materials you already have. No tab-switching, no manual counting, no spreadsheets.</p>
+        <button class="focus-more" onclick="openFeatureModal('crafting')">Learn more →</button>
+      </div>
+      <div class="focus-media">
+        <img src="screenshots/crafting-1.jpg" alt="Craft-vs-buy cost breakdown" loading="lazy" onclick="openFeatureModal('crafting')">
+        <img src="screenshots/crafting-2.jpg" alt="Can Craft materials view" loading="lazy" onclick="openFeatureModal('crafting')">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE GRID -->
+<section class="features-grid-section">
+  <div class="section-inner">
+    <div class="center">
+      <p class="section-label">What's Inside</p>
+      <h2 class="section-title">Everything you need in Tyria</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="grid3">
+      <div class="fcard is-new" data-feature="landscape" tabindex="0">
+        <span class="fcard-badge">Added 7/6/26</span>
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><line x1="17" y1="7" x2="17" y2="17"/></svg></div>
+        <h3>Landscape Mode</h3>
+        <p>Rotate your phone and the whole app follows — wider maps, a two-column dashboard, and a nav bar that highlights where you are.</p>
+      </div>
+      <div class="fcard" data-feature="boss-timers" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 13.5"/></svg></div>
+        <h3>World Boss Timers</h3>
+        <p>Live countdowns for every world boss across all maps. Never miss Tequatl, Triple Trouble, or the Shatterer again.</p>
+      </div>
+      <div class="fcard" data-feature="legendary" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg></div>
+        <h3>Legendary Crafting Tracker</h3>
+        <p>Track your legendary progress, see what you still need, and compare make-vs-buy costs with live Trading Post prices.</p>
+      </div>
+      <div class="fcard" data-feature="trading" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg></div>
+        <h3>Trading Post</h3>
+        <p>Check live item prices, track your listings, and find the best deals without launching the game.</p>
+      </div>
+      <div class="fcard" data-feature="account" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h3>Account &amp; Characters</h3>
+        <p>View your characters, equipment, wallet, currencies, and inventory at a glance. Supports multiple GW2 accounts.</p>
+      </div>
+      <div class="fcard" data-feature="maps" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
+        <h3>Interactive Maps</h3>
+        <p>Points of interest, waypoints, boss spawn locations, and mastery insights — for every zone in Tyria.</p>
+      </div>
+      <div class="fcard" data-feature="wvw" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="17" x2="4" y2="20"/><line x1="3" y1="19" x2="5" y2="21"/></svg></div>
+        <h3>WvW, PvP &amp; Guilds</h3>
+        <p>Live WvW objective maps with team ownership and tier badges. PvP stats and leaderboards. Guild roster, storage, and missions.</p>
+      </div>
+      <div class="fcard" data-feature="daily" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+        <h3>Daily Reset &amp; Wizard's Vault</h3>
+        <p>Track your daily and weekly objectives, Wizard's Vault progress, and reset timers — all in one place.</p>
+      </div>
+      <div class="fcard" data-feature="build-creator" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
+        <h3>Build Creator</h3>
+        <p>Build any profession from scratch with traits, skills, and both land and water skill bars — or paste in a build code from the game.</p>
+      </div>
+      <div class="fcard" data-feature="achievements" tabindex="0">
+        <div class="fcard-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3>Achievements</h3>
+        <p>Browse and search every achievement in the game, filtered by category, with live progress pulled straight from your account.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY SHIELD -->
+<section class="privacy-section" id="privacy">
+  <div class="shield-box">
+    <div class="shield-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/>
+        <path d="M9 12l2 2 4-4"/>
+      </svg>
+    </div>
+    <h2>Your data stays yours</h2>
+    <p>Tyrian Vault connects using your own personal GW2 API key — generated by you, stored only on your device. We never see it, store it, or share it. No account required on our end.</p>
+    <div class="shield-points">
+      <span class="shield-point">Key stored on-device only</span>
+      <span class="shield-point">No tracking or analytics</span>
+      <span class="shield-point">No account required</span>
+    </div>
+    <a class="btn-shield" href="privacy-policy.html">Read the Privacy Policy</a>
+  </div>
+</section>
+
+<!-- SUPPORT + DONATE -->
+<section class="closing" id="donate">
+  <div class="section-inner">
+    <div class="closing-grid">
+      <div class="closing-card" id="support">
+        <h2>Need help?</h2>
+        <p>Found a bug, have a question, or just want to share feedback? We'd love to hear from you.</p>
+        <a href="contact-support.html" class="btn-outline"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>Contact Support</a>
+        <a href="bug-report.html" class="btn-outline"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m8 2 1.88 1.88"/><path d="M14.12 3.88 16 2"/><path d="M9 7.13v-1a3 3 0 1 1 6 0v1"/><path d="M12 20c-3.3 0-6-2.7-6-6v-3a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v3c0 3.3-2.7 6-6 6z"/><path d="M12 20v-9"/><path d="M6.53 9C4.6 8.8 3 7.1 3 5"/><path d="M6 13H2"/><path d="M3 21c0-2.1 1.7-3.9 3.8-4"/><path d="M20.97 5c0 2.1-1.6 3.8-3.5 4"/><path d="M22 13h-4"/><path d="M17.2 17c2.1.1 3.8 1.9 3.8 4"/></svg>Report a Bug</a>
+      </div>
+      <div class="closing-card">
+        <h2>Support the project</h2>
+        <p>Tyrian Vault is free and always will be. If it's saved you time, a small donation keeps development going.</p>
+        <a href="https://ko-fi.com/medephiststudios" target="_blank" rel="noopener" class="btn-donate"><svg class="i i-lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>Buy me a coffee</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>
+    <a href="index.html">Medephist Studios</a>
+    <a href="privacy-policy.html">Privacy Policy</a>
+    <a href="contact-support.html">Support</a>
+  </div>
+  <p class="disclaimer">Tyrian Vault <span class="js-app-version">v0.34.0</span> · Tyrian Vault is an unofficial fan-made companion app and is not affiliated with, endorsed, sponsored, or approved by ArenaNet or NCSOFT.</p>
+  <p class="disclaimer">Guild Wars Games &copy; ArenaNet LLC. All rights reserved. NCSOFT, ArenaNet, Guild Wars, Guild Wars 2, GW2, Heart of Thorns, Path of Fire, End of Dragons, Secrets of the Obscure, Janthir Wilds, Visions of Eternity, and all associated logos, designs, and composite marks are trademarks or registered trademarks of NCSOFT Corporation. All other trademarks are the property of their respective owners.</p>
+  <p class="copyright">Website &copy; 2026 Medephist Studios</p>
+</footer>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <button class="lightbox-arrow lightbox-prev" id="lightboxPrev" aria-label="Previous">‹</button>
+  <img id="lightboxImg" src="" alt="">
+  <button class="lightbox-arrow lightbox-next" id="lightboxNext" aria-label="Next">›</button>
+</div>
+
+<!-- FEATURE MODAL -->
+<div class="modal-overlay" id="featureModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="modal-close" id="modalClose" aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+
+    <div class="modal-carousel" id="modalCarousel" style="display:none">
+      <img class="modal-carousel-img" id="carouselImg" alt="">
+      <button class="carousel-arrow carousel-prev" id="carouselPrev" aria-label="Previous image">‹</button>
+      <button class="carousel-arrow carousel-next" id="carouselNext" aria-label="Next image">›</button>
+      <div class="carousel-dots" id="carouselDots"></div>
+    </div>
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-icon" id="modalIcon"></div>
+        <h2 class="modal-title" id="modalTitle"></h2>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+var carouselImages = [];
+var carouselIndex = 0;
+
+function setCarouselSlide(index, animate) {
+  var img = document.getElementById('carouselImg');
+  var dots = document.querySelectorAll('.carousel-dot');
+  if (animate) {
+    img.classList.add('fading');
+    setTimeout(function() {
+      img.src = carouselImages[index];
+      img.classList.remove('fading');
+    }, 200);
+  } else {
+    img.src = carouselImages[index];
+  }
+  // Keep lightbox in sync
+  var lightbox = document.getElementById('lightbox');
+  if (lightbox.classList.contains('open')) {
+    document.getElementById('lightboxImg').src = carouselImages[index];
+  }
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === index); });
+  carouselIndex = index;
+}
+
+const FEATURES = {
+  'landscape': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="10" rx="2"/><line x1="17" y1="7" x2="17" y2="17"/></svg>',
+    title: 'Landscape Mode',
+    body: [
+      'Turn on Rotate to Landscape in Settings and the whole app follows your phone. Pages drop the title bar to give you more room, the Overview splits into a two-column dashboard, and Maps switches to a compact control bar so more of Tyria stays on screen.',
+      'The bottom navigation highlights the page you\'re on, so you always know where you are — everything stays exactly where you expect, just wider.'
+    ],
+    images: ['screenshots/landscape-1.jpg', 'screenshots/landscape-2.jpg', 'screenshots/landscape-3.jpg']
+  },
+  'notifications': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>',
+    title: 'Real Notifications & Alarms',
+    body: [
+      'Real OS-level push notifications with sound — not just in-app alerts. Set an alarm for any world boss and Tyrian Vault will notify you even when the app is closed and your screen is off.',
+      'Unlike simple countdowns, these are true system alarms that can wake your device and play a sound. Set it before a long farm session and put your phone down — we\'ll tell you when it\'s time.'
+    ],
+    images: ['screenshots/notifications-1.jpg', 'screenshots/notifications-2.jpg', 'screenshots/notifications-3.jpg']
+  },
+  'boss-timers': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 13.5"/></svg>',
+    title: 'World Boss Timers',
+    body: [
+      'Live countdowns for every world boss across all Tyrian maps, auto-synced to the official schedule. See at a glance what\'s coming up next, what\'s active right now, and how long until each boss spawns.',
+      'Never miss Tequatl, Triple Trouble, the Shatterer, or any of the other world bosses again.'
+    ],
+    images: ['screenshots/boss-timers-1.jpg', 'screenshots/boss-timers-2.jpg']
+  },
+  'crafting': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01M16 18h.01"/></svg>',
+    title: 'Pricing Calculator',
+    body: [
+      'Search any craftable item and compare its Trading Post buy price against the cost to craft it yourself, broken down material by material.',
+      'Switch to the Can Craft view to see every item you\'re able to make right now from materials you already have — no switching tabs, no manual counting.'
+    ],
+    images: ['screenshots/crafting-1.jpg', 'screenshots/crafting-2.jpg', 'screenshots/crafting-3.jpg', 'screenshots/crafting-4.jpg']
+  },
+  'legendary': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/></svg>',
+    title: 'Legendary Crafting Tracker',
+    body: [
+      'The long game, simplified. Track your progress toward any legendary weapon, armor piece, or trinket. See which collections are complete, which are in progress, and exactly what\'s still needed.',
+      'Live Trading Post prices are shown for every component so you can make smart make-vs-buy decisions without ever leaving the app.'
+    ],
+    images: ['screenshots/legendary-1.jpg', 'screenshots/legendary-2.jpg', 'screenshots/legendary-3.jpg']
+  },
+  'account': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+    title: 'Account & Characters',
+    body: [
+      'A complete snapshot of your GW2 account, always at hand. Browse all your characters, view their equipped gear and build, and check your wallet, currencies, and full inventory.',
+      'Supports multiple GW2 accounts — add them all and switch between them instantly.'
+    ],
+    images: ['screenshots/account-1.jpg', 'screenshots/account-2.jpg']
+  },
+  'maps': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg>',
+    title: 'Interactive Maps',
+    body: [
+      'Every zone in Tyria, fully detailed. Find points of interest, waypoints, hero points, vistas, and mastery insights. Boss spawn locations are clearly marked so you know exactly where to stand when the timer hits zero.',
+      'Whether you\'re map-completing a new zone or navigating somewhere unfamiliar, it\'s all here.'
+    ],
+    images: ['screenshots/maps-1.jpg', 'screenshots/maps-2.jpg']
+  },
+  'wvw': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"/><line x1="13" y1="19" x2="19" y2="13"/><line x1="16" y1="16" x2="20" y2="20"/><line x1="19" y1="21" x2="21" y2="19"/><polyline points="14.5 6.5 18 3 21 3 21 6 17.5 9.5"/><line x1="5" y1="14" x2="9" y2="18"/><line x1="7" y1="17" x2="4" y2="20"/><line x1="3" y1="19" x2="5" y2="21"/></svg>',
+    title: 'WvW, PvP & Guilds',
+    body: [
+      'Live World vs. World objective maps showing current team ownership for every keep, tower, and camp — complete with tier and matchup info, updated in real time.',
+      'PvP stats and season rankings for your characters. Guild roster, vault storage, and mission progress all in one place — everything your guild needs, without logging in.'
+    ],
+    images: ['screenshots/wvw-1.jpg', 'screenshots/wvw-2.jpg', 'screenshots/wvw-3.jpg']
+  },
+  'daily': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>',
+    title: 'Daily Reset & Wizard\'s Vault',
+    body: [
+      'Stay on top of your daily routine without effort. See all daily and weekly objectives, your current Wizard\'s Vault astral acclaim balance, and which objectives you\'ve completed.',
+      'A live countdown to the next daily and weekly reset means you\'ll never accidentally let rewards expire.'
+    ],
+    images: ['screenshots/daily-1.jpg', 'screenshots/daily-2.jpg']
+  },
+  'trading': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/><path d="m16.71 13.88.7.71-2.82 2.82"/></svg>',
+    title: 'Trading Post',
+    body: [
+      'The full GW2 Trading Post in your pocket. Search any item for live buy and sell prices, check your active listings and transaction history, and spot deals — all without launching the game.',
+      'Perfect for flipping, monitoring crafting material costs, or checking what a rare drop is worth before you sell.'
+    ],
+    images: ['screenshots/trading-1.jpg', 'screenshots/trading-2.jpg']
+  },
+  'build-creator': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>',
+    title: 'Build Creator',
+    body: [
+      'Create a build for any profession from the ground up. Pick your specializations, traits, and skills, with a Land / Water toggle so both skill bars are covered.',
+      'Already have a build from the game? Paste in its build template chat code to import and save it instantly alongside your custom creations.'
+    ],
+    images: ['screenshots/build-creator-1.jpg', 'screenshots/build-creator-2.jpg']
+  },
+  'achievements': {
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    title: 'Achievements',
+    body: [
+      'Every achievement in the game, synced live from your account. See your total achievement points broken down by permanent, daily, and monthly, and filter or search by category to find exactly what you\'re chasing.',
+      'Tap any achievement for its full description, tier breakdown, and a direct link to the GW2 Wiki for more detail.'
+    ],
+    images: ['screenshots/achievements-1.jpg', 'screenshots/achievements-2.jpg']
+  }
+};
+
+function openFeatureModal(key) {
+  var f = FEATURES[key];
+  if (!f) return;
+
+  document.getElementById('modalIcon').innerHTML = f.icon;
+  document.getElementById('modalTitle').textContent = f.title;
+
+  var bodyEl = document.getElementById('modalBody');
+  bodyEl.innerHTML = '';
+  f.body.forEach(function(text) {
+    var p = document.createElement('p');
+    p.textContent = text;
+    bodyEl.appendChild(p);
+  });
+
+  carouselImages = f.images || [];
+  var carousel = document.getElementById('modalCarousel');
+  var dotsEl   = document.getElementById('carouselDots');
+  var prev     = document.getElementById('carouselPrev');
+  var next     = document.getElementById('carouselNext');
+
+  if (carouselImages.length) {
+    carousel.style.display = '';
+    dotsEl.innerHTML = '';
+    carouselImages.forEach(function(_, i) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Image ' + (i + 1));
+      dot.addEventListener('click', function() { setCarouselSlide(i, true); });
+      dotsEl.appendChild(dot);
+    });
+    var multi = carouselImages.length > 1;
+    prev.style.display = multi ? '' : 'none';
+    next.style.display = multi ? '' : 'none';
+    dotsEl.style.display = multi ? '' : 'none';
+    document.getElementById('carouselImg').src = carouselImages[0];
+    carouselIndex = 0;
+  } else {
+    carousel.style.display = 'none';
+  }
+
+  document.getElementById('featureModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeFeatureModal() {
+  document.getElementById('featureModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('carouselPrev').addEventListener('click', function() {
+  setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, true);
+});
+document.getElementById('carouselNext').addEventListener('click', function() {
+  setCarouselSlide((carouselIndex + 1) % carouselImages.length, true);
+});
+document.getElementById('modalClose').addEventListener('click', closeFeatureModal);
+
+document.querySelectorAll('.fcard[data-feature]').forEach(function(card) {
+  card.addEventListener('click', function() { openFeatureModal(card.dataset.feature); });
+  card.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openFeatureModal(card.dataset.feature); }
+  });
+});
+
+// Deep link: ?feature=<key> opens that feature's popup on load (e.g. the in-app update card links here)
+(function() {
+  var key = new URLSearchParams(window.location.search).get('feature');
+  if (key && FEATURES[key]) openFeatureModal(key);
+})();
+
+document.getElementById('featureModal').addEventListener('click', function(e) {
+  if (e.target === this) closeFeatureModal();
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeFeatureModal();
+});
+
+// Lightbox
+var lbTouchStartX = 0, lbTouchStartY = 0;
+
+function openLightbox() {
+  if (!carouselImages.length) return;
+  document.getElementById('lightboxImg').src = carouselImages[carouselIndex];
+  var lb = document.getElementById('lightbox');
+  lb.classList.add('open');
+  var multi = carouselImages.length > 1;
+  document.getElementById('lightboxPrev').style.display = multi ? '' : 'none';
+  document.getElementById('lightboxNext').style.display = multi ? '' : 'none';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+
+document.getElementById('carouselImg').addEventListener('click', openLightbox);
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+document.getElementById('lightboxPrev').addEventListener('click', function(e) {
+  e.stopPropagation();
+  setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
+});
+document.getElementById('lightboxNext').addEventListener('click', function(e) {
+  e.stopPropagation();
+  setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
+});
+// Swipe in lightbox
+document.getElementById('lightbox').addEventListener('touchstart', function(e) {
+  lbTouchStartX = e.changedTouches[0].clientX;
+  lbTouchStartY = e.changedTouches[0].clientY;
+}, { passive: true });
+document.getElementById('lightbox').addEventListener('touchend', function(e) {
+  if (!carouselImages.length) return;
+  var dx = lbTouchStartX - e.changedTouches[0].clientX;
+  var dy = lbTouchStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
+  if (dx > 0) {
+    setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
+  } else {
+    setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
+  }
+}, { passive: true });
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'Escape') { closeLightbox(); return; }
+  if (e.key === 'ArrowRight') setCarouselSlide((carouselIndex + 1) % carouselImages.length, false);
+  if (e.key === 'ArrowLeft') setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, false);
+});
+
+// Touch swipe support for carousel
+var swipeStartX = 0;
+var swipeStartY = 0;
+document.getElementById('modalCarousel').addEventListener('touchstart', function(e) {
+  swipeStartX = e.changedTouches[0].clientX;
+  swipeStartY = e.changedTouches[0].clientY;
+}, { passive: true });
+document.getElementById('modalCarousel').addEventListener('touchend', function(e) {
+  if (!carouselImages.length) return;
+  var dx = swipeStartX - e.changedTouches[0].clientX;
+  var dy = swipeStartY - e.changedTouches[0].clientY;
+  if (Math.abs(dx) < Math.abs(dy) || Math.abs(dx) < 40) return;
+  if (dx > 0) {
+    setCarouselSlide((carouselIndex + 1) % carouselImages.length, true);
+  } else {
+    setCarouselSlide((carouselIndex - 1 + carouselImages.length) % carouselImages.length, true);
+  }
+}, { passive: true });
+
+// Keep the displayed app version in sync with the release manifest the app also reads.
+(function() {
+  fetch('latest.json?_=' + Date.now(), { headers: { Accept: 'application/json' } })
+    .then(function(r) { return r.ok ? r.json() : null; })
+    .then(function(d) {
+      if (!d || !d.version) return;
+      var v = 'v' + String(d.version).trim().replace(/^v/i, '');
+      document.querySelectorAll('.js-app-version').forEach(function(el) { el.textContent = v; });
+    })
+    .catch(function() {});
+})();
+</script>
+
+</body>
+</html>
